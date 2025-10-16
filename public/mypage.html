@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>마이페이지</title>
+    <style>
+        .box{
+            text-align: center;
+            font-size: 32px;
+            margin-top: 36px;
+        }
+        hr{
+            margin-top: 36px;
+            border-bottom: 1px;
+        }
+    </style>
+    <link rel="stylesheet" href="css/myPage.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/modal.css">
+</head>
+<body>
+    <div class = "box">
+        아무 말 대잔치
+        <div class="profile-menu">
+            <img src="" alt="user" class="profile-icon" id="profileIcon">
+            <div class="dropdown" id="dropdownMenu">
+                <a href="/">회원정보수정</a>
+                <a href="/">비밀번호수정</a>
+                <a href="/">로그아웃</a>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div style="text-align: center; font-size: 32px; margin-top: 150px; margin-bottom: 30px;">
+        <b>회원정보수정</b>
+    </div>
+    <form id="registerForm">
+        <label for="profileInput"><b>프로필 사진</b></label>
+        <label class="image-upload">
+            <span>변경</span>
+            <input type="file" accept="image/*" id="profileInput">
+            <img id="preview" alt="">
+        </label>
+        <div>
+            <label for="email"><b>이메일</b></label>
+            <input type="email" id="email" value="user@example.com" readonly class="read-only">
+        </div>
+        <div>
+            <label for="nickname"> <b>닉네임</b> </label>
+            <input type="text" id="nickname" placeholder="닉네임을 입력하세요" required>
+        </div>
+        <button id="checkButton" class="login_button" type="button">수정하기</button>
+    </form>
+    <button id="deleteButton" class="redirect-button">회원 탈퇴</button>
+    <button id="confirmButton" class ="confirm-button" style="display: none">수정완료</button>
+
+
+    <!-- 모달 (처음엔 숨김 상태) -->
+    <div id="deleteModal" class="modal-overlay">
+        <div class="modal-content">
+            <p class="modal-title"><b>회원탈퇴 하시겠습니까?</b></p>
+            <p class="modal-desc">작성된 게시글과 댓글은 삭제됩니다.</p>
+            <div class="modal-buttons">
+                <button id="cancelButton" class="cancel-btn">취소</button>
+                <button id="confirmDeleteButton" class="confirm-btn">확인</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/profileImageClick.js"></script>
+    <script src="js/myPage.js"></script>
+    <script src="js/deleteModal.js"></script>
+</body>
+</html>

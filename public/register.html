@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입 페이지</title>
+    <style>
+        .box{
+            text-align: center;
+            font-size: 32px;
+            margin-top: 36px;
+        }
+        hr{
+            margin-top: 36px;
+            border-bottom: 1px;
+        }
+        .back-btn {
+            position: absolute;
+            left: 520px;
+            margin-top: 36px;
+            top: 0;
+            font-size: 32px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+    </style>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class = "box">
+        <button class="back-btn" onclick=""><</button>
+        아무 말 대잔치
+    </div>
+    <hr style="margin-top: 36px; border-bottom: 1px;">
+
+    <div style="text-align: center; font-size: 32px; margin-top: 150px; margin-bottom: 30px;">
+        <b>회원가입</b>
+    </div>
+
+    <form id="registerForm">
+
+        <label for="profileInput"><b>프로필 사진</b></label>
+        <label class="image-upload">
+            <span>+</span>
+            <input type="file" accept="image/*" id="profileInput">
+            <img id="preview" alt="">
+        </label>
+
+        <div>
+            <label for="email"><b>이메일</b></label>
+            <input type="email" id="email" placeholder="이메일을 입력하세요" required>
+        </div>
+        <div>
+            <label for="password"><b>비밀번호</b> </label>
+            <input type="password" id="password" placeholder="비밀번호를 입력하세요" required>
+        </div>
+        <div>
+            <label for="passwordConfirm"><b>비밀번호 확인</b> </label>
+            <input type="password" id="passwordConfirm" placeholder="비밀번호를 한번 더 입력하세요" required>
+        </div>
+        <div>
+            <label for="nickname"> <b>닉네임</b> </label>
+            <input type="text" id="nickname" placeholder="닉네임을 입력하세요" required>
+        </div>
+        <button class = "login_button" type="submit">회원가입</button>
+    </form>
+    <button class="redirect-button" onclick="">로그인하러 가기</button>
+</body>
+</html>

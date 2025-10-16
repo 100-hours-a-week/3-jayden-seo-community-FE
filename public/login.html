@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인 페이지</title>
+    <style>
+        .box{
+            text-align: center;
+            font-size: 32px;
+            margin-top: 36px;
+        }
+        hr{
+            margin-top: 36px;
+            border-bottom: 1px;
+        }
+    </style>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class = "box">
+        아무 말 대잔치
+    </div>
+    <hr>
+    <div style="text-align: center; font-size: 32px; margin-top: 220px; margin-bottom: 30px;">
+        <b>로그인</b>
+    </div>
+    <form id="loginForm">
+        <div>
+            <label for="email"><b>이메일</b></label>
+            <input type="email" id="email" placeholder="이메일을 입력하세요" required>
+        </div>
+        <div>
+            <label for="password"><b>비밀번호</b> </label>
+            <input type="password" id="password" placeholder="비밀번호를 입력하세요" required>
+        </div>
+        <button id="loginButton" class="login_button" type="button">로그인</button>
+    </form>
+    <button class="redirect-button" onclick="">회원가입</button>
+
+    <script src="js/loginRequest.js"></script>
+</body>
+</html>

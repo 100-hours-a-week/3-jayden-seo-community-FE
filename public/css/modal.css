@@ -1,0 +1,63 @@
+/* ✅ 모달 전체 배경 (블러 처리) */
+.modal-overlay {
+    display: none; /* 처음엔 숨김 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(4px); /* 🔥 배경 블러 처리 */
+    background-color: rgba(0, 0, 0, 0.2); /* 살짝 어두운 오버레이 */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* ✅ 모달 내부 박스 */
+.modal-content {
+    background: white;
+    padding: 30px 40px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+/* ✅ 텍스트 */
+.modal-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+.modal-desc {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 25px;
+}
+
+/* ✅ 버튼 영역 */
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.cancel-btn, .confirm-btn {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    width: 90px;
+}
+
+/* 버튼 스타일 */
+.cancel-btn {
+    background-color: #000000;
+    color: white;
+}
+.confirm-btn {
+    background-color: #ad68da;
+    color: white;
+}
+.confirm-btn:hover {
+    background-color: #9149c8;
+}

@@ -1,0 +1,64 @@
+.box {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.profile-menu{
+    position: absolute;
+    right: 450px;
+}
+/* 프로필 아이콘 (동그라미) */
+.profile-icon {
+    display: block;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid gray;
+    cursor: pointer;
+    object-fit: cover;
+}
+
+/* 드롭다운 기본 상태 (숨김) */
+.dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 60px;
+    background-color: white;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    min-width: 120px;
+}
+
+/* 드롭다운 메뉴 항목 */
+.dropdown a {
+    display: block;
+    font-size: 14px;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #333;
+}
+
+.dropdown a:hover {
+    background-color: #f0f0f0;
+}
+
+.confirm-button {
+    display: block;
+    width: 90px;
+    padding: 8px 16px;
+    font-size: 16px;
+    background-color: #ad68da;
+    color: white;
+    border: 1px solid #ccc;
+    border-radius: 999px;
+    cursor: pointer;
+    opacity: 0.5;
+    margin: 20px auto 0;
+}
+
+.confirm-button:hover {
+    background-color: #ad68da;
+    opacity: 1;
+}
