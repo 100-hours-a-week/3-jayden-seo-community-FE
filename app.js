@@ -12,6 +12,11 @@ app.get('/login', (req, res) => {
     return "public/login.html";
 })
 
+app.get('/register', (req, res) => {
+    console.log('hello world!');
+    return "public/register.html";
+})
+
 // 서버 실행
 app.listen(PORT, () => {
     console.log(`🚀 Server is running at http://localhost:${PORT}`);
