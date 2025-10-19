@@ -16,13 +16,13 @@ document.getElementById("loginButton").addEventListener('click', async () => {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({email, password}),
+            credentials: "include"  // ★ 세션 쿠키 공유 필수
         });
 
-        const result = await res.json();
-        if(result.success){
+        if(res.ok){
             alert("로그인 성공!");
         }else{
-            alert(result.message || "로그인 실패");
+            alert("로그인 실패!");
         }
     }catch(err){
         console.error(err);
