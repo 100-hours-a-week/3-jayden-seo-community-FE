@@ -7,16 +7,6 @@ const PORT = 3000;
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/login', (req, res) => {
-    console.log('hello world!');
-    return "public/login.html";
-})
-
-app.get('/register', (req, res) => {
-    console.log('hello world!');
-    return "public/register.html";
-})
-
 // 서버 실행
 app.listen(PORT, () => {
     console.log(`🚀 Server is running at http://localhost:${PORT}`);
