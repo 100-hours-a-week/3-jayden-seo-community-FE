@@ -33,7 +33,7 @@ document.getElementById("registerForm").addEventListener('submit', async (e) => 
 
         if (!response.ok) {
             const errorData = await response.json();
-            alert("회원가입 실패: " + (errorData.message || "알 수 없는 오류"));
+            alert(errorData.message || '회원가입에 실패했습니다.');
             return;
         }
 
