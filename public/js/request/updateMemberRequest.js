@@ -1,20 +1,16 @@
-document.getElementById("loginForm").addEventListener("submit", async event => {
+document.getElementById("confirmButton").addEventListener("click", async event => {
     event.preventDefault();
 
-    const password = document.getElementById("password").value;
-    const passwordConfirm = document.getElementById("passwordConfirm").value;
+    const nickname = document.getElementById("nickname").value;
+    const profileImageUrl = "exmple@example.com";
 
-    if (password !== passwordConfirm) {
-        alert("비밀번호가 일치하지 않습니다.")
-        return;
-    }
     const requestBody = {
-        password,
-        passwordConfirm
+        nickname,
+        profileImageUrl
     }
 
     try {
-        const response = await fetch("http://localhost:8080/member/password", {
+        const response = await fetch("http://localhost:8080/member", {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -24,7 +20,7 @@ document.getElementById("loginForm").addEventListener("submit", async event => {
         });
 
         if (response.ok) {
-            alert('비밀번호가 성공적으로 변경되었습니다.');
+            alert('회원정보가 성공적으로 변경되었습니다.');
         } else {
             const errorData = await response.json();
             alert(errorData.message);
