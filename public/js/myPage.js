@@ -26,13 +26,25 @@ document.getElementById('checkButton').addEventListener('click', () => {
     // }
 });
 
-// document.getElementById('confirmBtn').addEventListener('click', async () => {
-//     const nickname = document.getElementById('nickname').value.trim();
-//     const res = await fetch('/user/update', {
-//         method: 'PUT',
-//         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify({ nickname })
-//     });
-//     const result = await res.json();
-//     if (result.success) alert("회원정보가 수정되었습니다!");
-// });
+window.addEventListener('DOMContentLoaded', async () => {
+    try{
+        const result = await fetch("http://localhost:8080/member", {
+            method: 'GET',
+            credentials: 'include'
+        })
+
+        if(!result.ok){
+            alert("로그인이 필요합니다.");
+            window.location.href = "/login.html";
+            return;
+        }else {
+            const member = await result.json();
+
+            document.getElementById('email').value = member.email;
+        }
+    }catch (e){
+        console.error(e);
+        alert("서버 오류가 발생했습니다.");
+        window.location.href = "/login.html";
+    }
+})
