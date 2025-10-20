@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 목록 페이지</title>
+    <style>
+        .box{
+            text-align: center;
+            font-size: 32px;
+            margin-top: 36px;
+        }
+        hr{
+            margin-top: 36px;
+            border-bottom: 1px;
+        }
+    </style>
+    <link rel="stylesheet" href="css/myPage.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/posts.css">
+</head>
+<body>
+    <div class = "box">
+        아무 말 대잔치
+        <div class="profile-menu">
+            <img src="" alt="user" class="profile-icon" id="profileIcon">
+            <div class="dropdown" id="dropdownMenu">
+                <a href="/mypage.html">회원정보수정</a>
+                <a href="/mypagepassword.html">비밀번호수정</a>
+                <a href="#" id="logoutButton">로그아웃</a>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div style="text-align: center; font-size: 24px; margin-top: 40px; margin-bottom: 30px;">
+        안녕하세요, <br>
+        아무 말 대잔치 <b>게시판</b> 입니다.
+    </div>
+
+    <button id="newPostButton" class ="post-button">게시글 작성</button>
+
+    <div class="container">
+        <div id="postList" class="post-list"></div>
+        <div id="loading" class="loading">로딩 중...</div>
+    </div>
+
+    <script src="js/profileImageClick.js"></script>
+    <script src="js/request/updatePasswordRequest.js"></script>
+    <script src="js/request/getAllPosts.js"></script>
+</body>
+</html>
