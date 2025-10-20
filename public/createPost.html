@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>마이페이지-비밀번호</title>
+    <style>
+        .box{
+            text-align: center;
+            font-size: 32px;
+            margin-top: 36px;
+        }
+        hr{
+            margin-top: 36px;
+            border-bottom: 1px;
+        }
+    </style>
+    <link rel="stylesheet" href="css/myPage.css">
+    <link rel="stylesheet" href="css/posts.css">
+</head>
+<body>
+    <div class = "box">
+        아무 말 대잔치
+        <div class="profile-menu">
+            <img src="" alt="user" class="profile-icon" id="profileIcon">
+            <div class="dropdown" id="dropdownMenu">
+                <a href="/mypage.html">회원정보수정</a>
+                <a href="/mypagepassword.html">비밀번호수정</a>
+                <a href="#" id="logoutButton">로그아웃</a>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div style="text-align: center; font-size: 24px; margin-top: 40px; margin-bottom: 30px;">
+        <b>게시글 작성</b>
+    </div>
+    <form id="postForm">
+
+        <div>
+            <label for="title"><b>제목*</b></label>
+            <input type="text" id="title" placeholder="제목을 입력해주세요.(최대 26글자)" required>
+        </div>
+        <div>
+            <label for="content"><b>내용*</b> </label>
+            <textarea id="content" placeholder="내용을 입력해주세요" required></textarea>
+        </div>
+        <div class="image-upload">
+            <label for="imageInput"><b>이미지</b></label>
+            <div class="file-input-row">
+                <input type="file" accept="image/*" id="imageInput">
+                <!-- 우리가 따로 표시할 문구 -->
+                <span id="fileLabel" class="file-label">파일을 선택해주세요.</span>
+            </div>
+        </div>
+
+        <button class = "post_button" type="submit">완료</button>
+    </form>
+
+
+    <script src="js/profileImageClick.js"></script>
+
+</body>
+</html>
