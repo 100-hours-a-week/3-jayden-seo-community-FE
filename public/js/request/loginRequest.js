@@ -21,7 +21,7 @@ document.getElementById("loginButton").addEventListener('click', async () => {
 
         if(res.ok){
             alert("로그인 성공!");
-            window.location.href = "/mypage.html";
+            window.location.href = "/posts.html";
         }else{
             const response = await res.json();
             alert("로그인 실패! " + response.message);
