@@ -98,3 +98,9 @@ input {
     outline: none;
     padding: 0;
 }
+
+.back-btn {
+    text-decoration: none; /* 밑줄 제거 */
+    color: inherit; /* 글자색 부모 요소랑 동일하게 */
+    font-weight: bold; /* 선택사항: 두껍게 */
+}
