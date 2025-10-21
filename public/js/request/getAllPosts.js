@@ -1,36 +1,19 @@
 const postList = document.getElementById("postList");
 const loading = document.getElementById("loading");
 
-let page = 1;
+let lastId = null;
 let isLoading = false;
-
-
-// 🔹 임시 데이터 생성 (fetch 대신 사용)
-function generateMockPosts(page) {
-    const posts = [];
-    for (let i = 0; i < 5; i++) {
-        const id = (page - 1) * 5 + i + 1;
-        posts.push({
-            title: `게시글 제목 ${id}`,
-            modifiedAt: `2025-10-${20 - (i % 5)}`,
-            likeCount: Math.floor(Math.random() * 100),
-            commentCount: Math.floor(Math.random() * 30),
-            viewCount: Math.floor(Math.random() * 1000),
-            authorImage: "https://via.placeholder.com/40",
-            authorNickname: `사용자 ${id}`,
-        });
-    }
-    return posts;
-}
+let hasMore = true;
 
 function appendPosts(posts) {
     posts.forEach((p) => {
         const card = document.createElement("div");
         card.className = "post-card";
+        card.dataset.id = p.id;
         card.innerHTML = `
       <div class="post-header">
         <h2 class="post-title">${p.title}</h2>
-        <span class="post-date">${p.modifiedAt}</span>
+        <span class="post-date">${p.updatedAt}</span>
       </div>
       <div class="post-stats">
         <span>좋아요 ${p.likeCount}</span>
@@ -38,8 +21,8 @@ function appendPosts(posts) {
         <span>조회수 ${p.viewCount}</span>
       </div>
       <div class="post-author">
-        <img src="${p.authorImage}" class="author-img" alt="user">
-        <span class="author-name">${p.authorNickname}</span>
+        <img src="${p.authorProfileImage}" class="author-img" alt="user">
+        <span class="author-name">${p.authorName}</span>
       </div>
     `;
         postList.appendChild(card);
@@ -47,26 +30,54 @@ function appendPosts(posts) {
 }
 
 async function loadPosts() {
-    if (isLoading) return;
+    if (isLoading || !hasMore) return;
     isLoading = true;
     loading.style.display = "block";
 
-    await new Promise((r) => setTimeout(r, 800)); // 로딩 느낌
-    const posts = generateMockPosts(page);
-    appendPosts(posts);
+    try{
+        const url = lastId
+            ? `http://localhost:8080/posts?lastId=${lastId}`
+            : `http://localhost:8080/posts`;
 
-    loading.style.display = "none";
-    isLoading = false;
-    page++;
+        const response = await fetch(url, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (!response.ok) {
+            res = await response.json();
+            alert(res.message);
+        }
+
+        const data = await response.json();
+
+        appendPosts(data.posts);
+        lastId = data.nextCursor
+        hasMore = data.hasNext;
+    }catch(e){
+        console.error(e);
+        alert(e);
+    }finally {
+        loading.style.display = "none";
+        isLoading = false;
+    }
 }
 
 // 🔹 무한 스크롤 이벤트
 window.addEventListener("scroll", () => {
     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+    // scrollTop: 현재 스크롤된 높이
+    // clientHeight: 현재 보이는 영역의 높이
+    // scrollHeight: 전체 문서의 총 높이
     if (scrollTop + clientHeight >= scrollHeight - 50 && !isLoading) {
         loadPosts();
     }
 });
 
+document.getElementById("newPostButton").addEventListener("click", () => {
+    window.location.href = "/createPost.html";
+});
 // 첫 게시글 표시
 loadPosts();
