@@ -9,7 +9,7 @@ function appendPosts(posts) {
     posts.forEach((p) => {
         const card = document.createElement("div");
         card.className = "post-card";
-        card.dataset.id = p.id;
+        card.dataset.id = p.postId;
         card.innerHTML = `
       <div class="post-header">
         <h2 class="post-title">${p.title}</h2>
@@ -25,6 +25,11 @@ function appendPosts(posts) {
         <span class="author-name">${p.authorName}</span>
       </div>
     `;
+
+        card.addEventListener("click", () => {
+            const postId = card.dataset.id;
+            window.location.href = `/posts.html/${postId}`;
+        })
         postList.appendChild(card);
     });
 }
