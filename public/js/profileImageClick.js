@@ -23,6 +23,7 @@ logout.addEventListener("click", async (e) => {
 
         if(response.ok) {
             alert("로그아웃 성공");
+            window.location.href="/login.html";
         }else{
             alert("로그아웃 실패");
         }
