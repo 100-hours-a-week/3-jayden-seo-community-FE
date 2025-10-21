@@ -99,8 +99,17 @@ input {
     padding: 0;
 }
 
+
 .back-btn {
-    text-decoration: none; /* 밑줄 제거 */
-    color: inherit; /* 글자색 부모 요소랑 동일하게 */
-    font-weight: bold; /* 선택사항: 두껍게 */
+    position: absolute;
+    left: 520px;
+    margin-top: 36px;
+    top: 0;
+    font-size: 32px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    text-decoration: none;
+    color: inherit;
+    font-weight: bold;
 }

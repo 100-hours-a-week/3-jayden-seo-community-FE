@@ -1,0 +1,199 @@
+/* 🔹 카드 형태 제거: 배경, 그림자, 테두리 모두 삭제 */
+.post-container {
+    padding: 0;
+    box-shadow: none;
+    background: none;
+    border: none;
+    border-radius: 0;
+    width: 700px;
+    margin: 40px auto;
+    color: #333;
+    line-height: 1.6;
+    justify-content: space-between;
+}
+
+/* 제목 */
+.post-title {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+}
+
+/* 작성자, 날짜 */
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 24px;
+}
+/* 오른쪽 버튼 그룹 */
+.post-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.post-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.post-actions button {
+    padding: 4px 8px;
+    border: 1px solid #ccc;
+    background: #f9f9f9;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.post-image{
+    border-top: 1px solid #ddd;
+}
+/* 본문 */
+.post-content {
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+/* 좋아요, 조회, 댓글 수 */
+.post-stats {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 25px 0;
+}
+
+/* 각 항목 박스 */
+.post-stats > div {
+    flex: 1;
+    text-align: center;
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 12px 0;
+    font-weight: 500;
+}
+
+/* 숫자 부분 */
+.stat-number {
+    font-size: 17px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 4px; /* ← 숫자와 텍스트 사이 간격 */
+}
+
+/* 댓글 입력 */
+.comment-form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    /*border-top: 1px solid #ddd;*/
+}
+
+.comment-form textarea {
+    resize: none;
+    height: 80px;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.comment-form .comment-submit {
+    margin-top: 8px;
+    align-self: flex-end;
+    background: #af79e1;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.comment-submit:hover {
+    background: #9149c8;
+}
+
+/* 댓글 목록 */
+.comment-list {
+    margin-top: 30px;
+}
+
+.comment-item {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 4px;
+}
+.comment-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.comment-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.comment-actions button {
+    padding: 4px 8px;
+    border: 1px solid #ccc;
+    background: #f9f9f9;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.comment-content {
+    margin-left: 4px;
+    color: #333;
+}
+
+/* 🔹 모달은 그대로 유지 */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 10px;
+    padding: 20px 30px;
+    text-align: center;
+    width: 300px;
+}
+
+.modal-buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.cancel-btn, .confirm-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.cancel-btn {
+    background: #ccc;
+    color: white;
+}
+
+.confirm-btn {
+    background: #e74c3c;
+    color: white;
+}
+
