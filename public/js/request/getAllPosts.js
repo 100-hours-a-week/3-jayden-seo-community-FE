@@ -28,7 +28,7 @@ function appendPosts(posts) {
 
         card.addEventListener("click", () => {
             const postId = card.dataset.id;
-            window.location.href = `/posts.html/${postId}`;
+            window.location.href = `/post.html?postId=${postId}`;
         })
         postList.appendChild(card);
     });
