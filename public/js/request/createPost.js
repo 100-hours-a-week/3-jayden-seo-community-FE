@@ -43,8 +43,9 @@ document.getElementById('postForm').addEventListener('submit', async (e) => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(postData),
-
+            credentials: 'include',
         });
+
         if(response.ok){
             alert("게시글이 성공적으로 작성되었습니다.");
             window.location.assign("/posts.html");
