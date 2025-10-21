@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>게시글 목록 페이지</title>
+    <title>게시글 수정</title>
     <style>
         .box{
             text-align: center;
@@ -15,7 +15,6 @@
         }
     </style>
     <link rel="stylesheet" href="css/myPage.css">
-    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/posts.css">
 </head>
 <body>
@@ -32,18 +31,32 @@
     </div>
     <hr>
     <div style="text-align: center; font-size: 24px; margin-top: 40px; margin-bottom: 30px;">
-        안녕하세요, <br>
-        아무 말 대잔치 <b>게시판</b> 입니다.
+        <b>게시글 수정</b>
     </div>
+    <form id="postForm">
 
-    <button id="newPostButton" class ="post-button">게시글 작성</button>
+        <div>
+            <label for="title"><b>제목*</b></label>
+            <input type="text" id="title" placeholder="제목을 입력해주세요.(최대 26글자)" required>
+        </div>
+        <div>
+            <label for="content"><b>내용*</b> </label>
+            <textarea id="content" placeholder="내용을 입력해주세요" required></textarea>
+        </div>
+        <div class="image-upload">
+            <label for="imageInput"><b>이미지</b></label>
+            <div class="file-input-row">
+                <input type="file" accept="image/*" id="imageInput">
+                <!-- 우리가 따로 표시할 문구 -->
+                <span id="fileLabel" class="file-label">파일을 선택해주세요.</span>
+            </div>
+        </div>
 
-    <div class="container">
-        <div id="postList" class="post-list"></div>
-        <div id="loading" class="loading">로딩 중...</div>
-    </div>
+        <button class = "post_button" type="submit">수정하기</button>
+    </form>
+
 
     <script src="js/profileImageClick.js"></script>
-    <script src="js/request/getAllPosts.js"></script>
+    <script src="js/request/updatePost.js"></script>
 </body>
 </html>

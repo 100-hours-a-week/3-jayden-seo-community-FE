@@ -35,10 +35,10 @@ document.getElementById('postForm').addEventListener('submit', async (e) => {
         content,
         imageUrls,
     }
-
+    const postId = 123;
     try{
-        const response = await fetch("http://localhost:8080/posts", {
-            method: 'POST',
+        const response = await fetch(`http://localhost:8080/posts/${postId}`, {
+            method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
             },
