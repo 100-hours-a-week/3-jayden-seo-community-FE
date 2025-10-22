@@ -1,5 +1,7 @@
 const input = document.getElementById('imageInput');
 const label = document.getElementById('fileLabel');
+const params = new URLSearchParams(window.location.search);
+const postId = params.get("postId");
 
 input.addEventListener('change', () => {
     if (input.files.length > 0) {
@@ -35,7 +37,6 @@ document.getElementById('postForm').addEventListener('submit', async (e) => {
         content,
         imageUrls,
     }
-    const postId = 26;
     try{
         const response = await fetch(`http://localhost:8080/posts/${postId}`, {
             method: 'PATCH',

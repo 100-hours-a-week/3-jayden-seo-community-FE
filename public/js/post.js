@@ -1,4 +1,6 @@
 let deleteTarget = null;
+const params = new URLSearchParams(window.location.search);
+const postId = params.get("postId");
 
 function openModal(type) {
     deleteTarget = type;
@@ -20,3 +22,9 @@ function confirmDelete() {
     }
     closeModal();
 }
+
+document.getElementById("post-edit-btn").addEventListener("click", (e) => {
+    e.preventDefault();
+
+    window.location.href = "/updatePost.html?postId=" + postId;
+});
