@@ -23,7 +23,7 @@ async function confirmDelete() {
             })
             if(result.ok) {
                 alert("게시글이 삭제되었습니다.");
-                window.location.href = 'http://localhost:3000/posts.html';
+                window.location.href = '../../../posts.html';
             }else{
                 const res = await result.json();
                 console.log(res);
