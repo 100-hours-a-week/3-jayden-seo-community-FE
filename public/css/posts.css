@@ -10,7 +10,7 @@
     cursor: pointer;
     opacity: 0.5;
     margin: 20px auto 0;
-    transform: translateX(250px); /* 👉 오른쪽으로 40px 이동 */
+    transform: translateX(280px); /* 👉 오른쪽으로 40px 이동 */
 }
 
 .post-button:hover {
