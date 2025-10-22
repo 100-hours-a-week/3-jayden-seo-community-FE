@@ -35,7 +35,7 @@ document.getElementById('postForm').addEventListener('submit', async (e) => {
         content,
         imageUrls,
     }
-    const postId = 123;
+    const postId = 26;
     try{
         const response = await fetch(`http://localhost:8080/posts/${postId}`, {
             method: 'PATCH',
@@ -43,10 +43,11 @@ document.getElementById('postForm').addEventListener('submit', async (e) => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(postData),
+            credentials: 'include',
 
         });
         if(response.ok){
-            alert("게시글이 성공적으로 작성되었습니다.");
+            alert("게시글이 성공적으로 수정되었습니다.");
             window.location.assign("/posts.html");
             // document.getElementById("postForm").reset();
             // fileLabel.textContent = "파일을 선택해주세요.";
