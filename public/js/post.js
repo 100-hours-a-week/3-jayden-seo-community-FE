@@ -14,9 +14,25 @@ function closeModal() {
     deleteTarget = null;
 }
 
-function confirmDelete() {
+async function confirmDelete() {
     if (deleteTarget === "post") {
-        alert("게시글이 삭제되었습니다.");
+        try{
+            const result = await fetch(`http://localhost:8080/posts/${postId}`, {
+                method: "DELETE",
+                credentials: "include"
+            })
+            if(result.ok) {
+                alert("게시글이 삭제되었습니다.");
+                window.location.href = 'http://localhost:3000/posts.html';
+            }else{
+                const res = await result.json();
+                console.log(res);
+                alert("게시글이 삭제에 실패했습니다. " + res.message);
+            }
+        }catch (e){
+            alert(e);
+        }
+
     } else if (deleteTarget === "comment") {
         alert("댓글이 삭제되었습니다.");
     }
