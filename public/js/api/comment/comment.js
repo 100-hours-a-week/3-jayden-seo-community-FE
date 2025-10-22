@@ -1,3 +1,5 @@
+let editingCommentId = null;
+
 document.addEventListener("DOMContentLoaded", () => {
     const params = new URLSearchParams(window.location.search);
     const postId = params.get("postId");
@@ -18,24 +20,44 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!content) {
             alert("댓글을 입력해주세요");
         }
-        try{
-            const result = await fetch(`http://localhost:8080/posts/${postId}/comments`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+        if(editingCommentId) {
+            const result = await fetch(`http://localhost:8080/comments/${editingCommentId}`, {
+                method: "PATCH",
+                headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({content}),
                 credentials: "include",
-            })
-            const comment = await result.json();
-            if(!result.ok) {
-                alert(comment.message);
+            });
+
+            if (!result.ok) {
+                const res = await result.json();
+                alert(res.message);
                 return;
             }
-            appendComment(comment);
-        }catch(e){
-            console.log(e);
-            alert("댓글 생성 오류!");
+
+            alert("댓글이 수정되었습니다.");
+            editingCommentId = null;
+            window.location.reload();
+        }else {
+
+            try {
+                const result = await fetch(`http://localhost:8080/posts/${postId}/comments`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({content}),
+                    credentials: "include",
+                })
+                const comment = await result.json();
+                if (!result.ok) {
+                    alert(comment.message);
+                    return;
+                }
+                appendComment(comment);
+            } catch (e) {
+                console.log(e);
+                alert("댓글 생성 오류!");
+            }
         }
     })
 })
@@ -75,7 +97,7 @@ function appendComment(comment) {
 
     const item = document.createElement("div");
     item.className = "comment-item";
-    item.dataset.commentId = comment.id;
+    item.dataset.commentId = comment.commentId;
     item.innerHTML = `
     <div class="comment-header">
       <div class="comment-info">
@@ -92,10 +114,16 @@ function appendComment(comment) {
     </div>
     <div class="comment-content">${comment.content}</div>
   `;
+    item.querySelector(".edit-btn").addEventListener("click", () => {
+        const textarea = document.querySelector(".comment-form textarea");
+        const submitButton = document.querySelector(".comment-submit");
 
-    // item.querySelector(".delete-btn").addEventListener("click", () => {
-    //     const commentId = item.dataset.commentId;
-    //     window.deleteCommentId = commentId;
-    // });
+        const content = item.querySelector(".comment-content").textContent;
+        textarea.value = content;
+        textarea.focus();
+
+        editingCommentId = item.dataset.commentId; // 수정 대상 ID 저장
+        submitButton.textContent = "댓글 수정";
+    });
     list.prepend(item);
 }
