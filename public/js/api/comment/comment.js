@@ -75,6 +75,7 @@ function appendComment(comment) {
 
     const item = document.createElement("div");
     item.className = "comment-item";
+    item.dataset.commentId = comment.id;
     item.innerHTML = `
     <div class="comment-header">
       <div class="comment-info">
@@ -86,10 +87,15 @@ function appendComment(comment) {
       </div>
       <div class="comment-actions">
         <button class="edit-btn">수정</button>
-        <button class="delete-btn" onclick="openModal('comment')">삭제</button>
+        <button class="delete-btn" onclick="openModal('comment', ${comment.commentId})">삭제</button>
       </div>
     </div>
     <div class="comment-content">${comment.content}</div>
   `;
+
+    // item.querySelector(".delete-btn").addEventListener("click", () => {
+    //     const commentId = item.dataset.commentId;
+    //     window.deleteCommentId = commentId;
+    // });
     list.prepend(item);
 }

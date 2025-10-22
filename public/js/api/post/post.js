@@ -1,9 +1,12 @@
-let deleteTarget = null;
 const params = new URLSearchParams(window.location.search);
 const postId = params.get("postId");
+let deleteTarget = null;
+let deleteCommentId = null;
 
-function openModal(type) {
+function openModal(type, commentId) {
     deleteTarget = type;
+    deleteCommentId = commentId;
+
     document.getElementById("modalText").textContent =
         type === "post" ? "게시글을 삭제하시겠습니까?" : "댓글을 삭제하시겠습니까?";
     document.getElementById("deleteModal").style.display = "flex";
@@ -34,7 +37,20 @@ async function confirmDelete() {
         }
 
     } else if (deleteTarget === "comment") {
-        alert("댓글이 삭제되었습니다.");
+        const result = await fetch(`http://localhost:8080/comments/${deleteCommentId}`, {
+            method: "DELETE",
+            credentials: "include"
+        });
+
+        if(result.ok) {
+            alert("댓글이 삭제되었습니다.");
+            window.location.reload();
+            return;
+        }
+
+        const res = await result.json();
+        console.log(res);
+        alert(res.message);
     }
     closeModal();
 }
