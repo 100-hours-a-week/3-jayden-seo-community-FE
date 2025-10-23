@@ -1,3 +1,5 @@
+let liked = false
+
 document.addEventListener("DOMContentLoaded", async () => {
     const params = new URLSearchParams(window.location.search);
     const postId = params.get("postId");
@@ -26,6 +28,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 })
 
 function renderPost(post){
+    window.liked = post.liked;
     // 제목
     document.querySelector(".post-title").textContent = post.title;
 
@@ -60,5 +63,40 @@ function renderPost(post){
     statNumbers[0].textContent = post.likeCount;
     statNumbers[1].textContent = post.viewCount;
     statNumbers[2].textContent = post.commentCount;
+    liked = post.liked;
+    if(liked){
+        document.getElementById("like-session").style.backgroundColor = "red";
+    }
+    likeApi(post)
+}
 
+function likeApi(post) {
+    const likeSession = document.getElementById("like-session");
+    const likeCount = document.getElementById("like-number");
+    const postId = post.postId;
+    likeSession.addEventListener("click", async () => {
+        const requestUrl = `http://localhost:8080/posts/${postId}/like`;
+        const method = liked ? "DELETE" : "POST";
+        try {
+            const result = await fetch(requestUrl, {
+                method,
+                credentials: 'include',
+            })
+
+            if (result.ok) {
+                console.log(liked);
+                likeSession.style.background = liked ? "#f5f5f5" : "red";
+                const curr = parseInt(likeCount.textContent);
+                likeCount.textContent = liked ? String(curr - 1) : String(curr + 1);
+                liked = !liked;
+                return;
+            }
+
+            alert("좋아요 요청 실패! ");
+
+        } catch (e) {
+            console.error(e);
+            alert("좋아요 오류!");
+        }
+    })
 }
