@@ -14,12 +14,13 @@ document.addEventListener("DOMContentLoaded", async () => {
             method: "GET",
             credentials: "include",
         })
-        const post = await response.json();
         if(response.ok){
+            const post = await response.json();
             renderPost(post)
         }else{
-            console.log(res);
+            const res = await response.json();
             alert(res.message);
+            window.location.href = "/posts.html";
         }
     }catch(error) {
         console.log(error);

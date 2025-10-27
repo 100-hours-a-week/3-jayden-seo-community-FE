@@ -53,7 +53,8 @@ document.getElementById('postForm').addEventListener('submit', async (e) => {
             // fileLabel.textContent = "파일을 선택해주세요.";
         }else {
             const error = await response.json();
-            alert("게시글 등록 실패: " + error.message);
+            alert(error.message);
+            window.location.assign("/posts.html");
         }
     }catch (error) {
         console.error("Error:", error);
