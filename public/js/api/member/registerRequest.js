@@ -38,6 +38,7 @@ document.getElementById("registerForm").addEventListener('submit', async (e) => 
         }
 
         alert("회원가입이 완료되었습니다.");
+        window.location.href = "/login.html";
     }catch(err){
         console.log(err);
     }
