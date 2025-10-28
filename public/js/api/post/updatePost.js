@@ -49,12 +49,13 @@ document.getElementById('postForm').addEventListener('submit', async (e) => {
         });
         if(response.ok){
             alert("게시글이 성공적으로 수정되었습니다.");
-            window.location.assign("/posts.html");
+            window.location.href = "/posts.html";
             // document.getElementById("postForm").reset();
             // fileLabel.textContent = "파일을 선택해주세요.";
         }else {
             const error = await response.json();
-            alert("게시글 등록 실패: " + error.message);
+            alert(error.message);
+            window.location.href = `/post.html?postId=${postId}`;
         }
     }catch (error) {
         console.error("Error:", error);

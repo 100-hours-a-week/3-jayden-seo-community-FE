@@ -30,7 +30,7 @@ async function confirmDelete() {
             }else{
                 const res = await result.json();
                 console.log(res);
-                alert("게시글이 삭제에 실패했습니다. " + res.message);
+                alert(res.message);
             }
         }catch (e){
             alert(e);
