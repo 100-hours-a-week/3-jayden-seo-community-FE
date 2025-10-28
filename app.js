@@ -19,7 +19,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
-app.post("/upload", upload.single("image"), (req, res) => {
+app.post("/upload", upload.single("file"), (req, res) => {
     res.json({
         success: true,
         filename: req.file.filename,
@@ -41,7 +41,7 @@ app.delete("/upload/:filename", (req, res) => {
 
         return res.json({
             success: true,
-            message: "파일이 성공적으로 삭제되었습니다."
+            message: "파일이 성공적으로 삭제되었습니다.",
         });
     });
 });
