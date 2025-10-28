@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = "/posts.html";
     }
 
-    const textarea = document.querySelector(".comment-form textarea");
+    let textarea = document.querySelector(".comment-form textarea");
     const submitButton = document.querySelector(".comment-submit");
 
     submitButton.addEventListener("click", async () => {
@@ -54,6 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
                 appendComment(comment);
+                textarea.value = ""; // 댓글 입력창 초기화
             } catch (e) {
                 console.log(e);
                 alert("댓글 생성 오류!");
