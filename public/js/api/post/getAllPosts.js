@@ -49,18 +49,20 @@ async function loadPosts() {
             headers: {
                 "Content-Type": "application/json",
             },
+            credentials: "include",
         });
+        const res = await response.json();
 
         if (!response.ok) {
-            res = await response.json();
+            console.log(response);
             alert(res.message);
+            window.location.href = "/login.html";
+            return;
         }
 
-        const data = await response.json();
-
-        appendPosts(data.posts);
-        lastId = data.nextCursor
-        hasMore = data.hasNext;
+        appendPosts(res.posts);
+        lastId = res.nextCursor
+        hasMore = res.hasNext;
     }catch(e){
         console.error(e);
         alert(e);
