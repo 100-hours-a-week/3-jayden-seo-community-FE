@@ -2,20 +2,20 @@ let isNewImage = false;
 
 window.addEventListener('DOMContentLoaded', async () => {
     try{
-        const result = await fetch(`${SERVER_URL}/member`, {
+        const response = await fetch(`${SERVER_URL}/member`, {
             method: 'GET',
             credentials: 'include'
         })
 
-        if(!result.ok){
+        if(!response.ok){
             alert("로그인이 필요합니다.");
             window.location.href = "/login.html";
             return;
         }else {
-            const member = await result.json();
+            const res = await response.json();
 
-            document.getElementById('email').value = member.email;
-            document.getElementById('preview').src = member.imageUrl;
+            document.getElementById('email').value = res.email;
+            document.getElementById('preview').src = res.imageUrl;
         }
     }catch (e){
         console.error(e);
@@ -121,6 +121,7 @@ document.getElementById("confirmButton").addEventListener("click", async event =
         }
 
         isNewImage = false;
+        sessionStorage.setItem("profileImageUrl", profileImageUrl);
 
     }catch (error) {
         alert(error.response.data);
