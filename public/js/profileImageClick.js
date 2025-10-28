@@ -1,6 +1,9 @@
 const icon = document.getElementById("profileIcon");
 const menu = document.getElementById("dropdownMenu");
 const logout = document.getElementById("logoutButton");
+const profile = document.getElementById("profileIcon");
+
+profile.src = sessionStorage.getItem("profileImageUrl");
 
 icon.addEventListener("click", () => {
     menu.style.display = menu.style.display === "none" ? "block" : "none";
@@ -16,7 +19,7 @@ logout.addEventListener("click", async (e) => {
     e.preventDefault();
 
     try{
-        const response = await fetch("http://localhost:8080/auth/logout", {
+        const response = await fetch(`${SERVER_URL}/auth/logout`, {
             method: "DELETE",
             credentials: "include"
         });

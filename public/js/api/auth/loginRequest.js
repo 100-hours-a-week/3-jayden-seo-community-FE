@@ -12,18 +12,20 @@ document.getElementById("loginButton").addEventListener('click', async () => {
     }
 
     try{
-        const res = await fetch(`${SERVER_URL}/auth/login`, {
+        const response = await fetch(`${SERVER_URL}/auth/login`, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({email, password}),
             credentials: "include"  // ★ 세션 쿠키 공유 필수
         });
+        const res = await response.json();
 
-        if(res.ok){
+        if(response.ok){
             alert("로그인 성공!");
+            sessionStorage.setItem("profileImageUrl", res.profileImageUrl);
+            console.log(res.profileImageUrl);
             window.location.href = "/posts.html";
         }else{
-            const response = await res.json();
             alert("로그인 실패! " + response.message);
         }
     }catch(err){
