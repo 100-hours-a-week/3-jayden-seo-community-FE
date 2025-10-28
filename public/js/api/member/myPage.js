@@ -1,4 +1,45 @@
-const BASE_URL = require("public/config/constant.js");
+let isNewImage = false;
+
+window.addEventListener('DOMContentLoaded', async () => {
+    try{
+        const result = await fetch(`${SERVER_URL}/member`, {
+            method: 'GET',
+            credentials: 'include'
+        })
+
+        if(!result.ok){
+            alert("로그인이 필요합니다.");
+            window.location.href = "/login.html";
+            return;
+        }else {
+            const member = await result.json();
+
+            document.getElementById('email').value = member.email;
+            document.getElementById('preview').src = member.imageUrl;
+        }
+    }catch (e){
+        console.error(e);
+        alert("서버 오류가 발생했습니다.");
+        window.location.href = "/login.html";
+    }
+})
+
+document.getElementById("profileInput").addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+        preview.src = event.target.result;
+        preview.style.display = "block";
+        preview.style.width = "120px";
+        preview.style.height = "120px";
+        preview.style.objectFit = "cover";
+        preview.style.borderRadius = "100%";
+    };
+    reader.readAsDataURL(file);
+    isNewImage = true;
+});
 
 document.getElementById('checkButton').addEventListener('click', async () => {
     const nickname = document.getElementById('nickname').value.trim();
@@ -10,8 +51,9 @@ document.getElementById('checkButton').addEventListener('click', async () => {
 
     try {
         const result = await fetch(
-            `BASE_URL/member/nickname/duplicate?nickname=${encodeURIComponent(nickname)}`, {
-            method: 'GET'
+            `${SERVER_URL}/member/nickname/duplicate?nickname=${encodeURIComponent(nickname)}`, {
+                method: 'GET',
+                credentials: 'include'
         });
 
         if (result.ok) {
@@ -28,34 +70,32 @@ document.getElementById('checkButton').addEventListener('click', async () => {
     }
 });
 
-window.addEventListener('DOMContentLoaded', async () => {
-    try{
-        const result = await fetch("BASE_URL/member", {
-            method: 'GET',
-            credentials: 'include'
-        })
-
-        if(!result.ok){
-            alert("로그인이 필요합니다.");
-            window.location.href = "/login.html";
-            return;
-        }else {
-            const member = await result.json();
-
-            document.getElementById('email').value = member.email;
-        }
-    }catch (e){
-        console.error(e);
-        alert("서버 오류가 발생했습니다.");
-        window.location.href = "/login.html";
-    }
-})
-
 document.getElementById("confirmButton").addEventListener("click", async event => {
     event.preventDefault();
 
     const nickname = document.getElementById("nickname").value;
-    const profileImageUrl = "exmple@example.com";
+    const profileFile = document.getElementById("profileInput").files[0];
+    let profileImageUrl = null;
+
+    if(isNewImage){
+        const formData = new FormData();
+        formData.append("file", profileFile);
+        try{
+            const result = await fetch(`${IMAGE_SERVER_URL}/upload`, {
+                method: "POST",
+                body: formData,
+            });
+            if(!result.ok){
+                alert("이미지 업로드 실패");
+                return
+            }
+            const data = await result.json();
+            profileImageUrl = data.path;
+        }catch (error) {
+            alert("이미지 업로드 실패");
+            console.log(error);
+        }
+    }
 
     const requestBody = {
         nickname,
@@ -63,7 +103,7 @@ document.getElementById("confirmButton").addEventListener("click", async event =
     }
 
     try {
-        const response = await fetch("BASE_URL/member", {
+        const response = await fetch(`${SERVER_URL}/member`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -79,6 +119,8 @@ document.getElementById("confirmButton").addEventListener("click", async event =
             const errorData = await response.json();
             alert(errorData.message);
         }
+
+        isNewImage = false;
 
     }catch (error) {
         alert(error.response.data);
