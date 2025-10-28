@@ -37,7 +37,7 @@ document.getElementById('postForm').addEventListener('submit', async (e) => {
     }
 
     try{
-        const response = await fetch("http://localhost:8080/posts", {
+        const response = await fetch(`${SERVER_URL}/posts`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

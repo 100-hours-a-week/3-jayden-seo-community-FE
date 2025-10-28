@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     try{
-        const response = await fetch(`http://localhost:8080/posts/${postId}`, {
+        const response = await fetch(`${SERVER_URL}/posts/${postId}`, {
             method: "GET",
             credentials: "include",
         })
@@ -76,7 +76,7 @@ function likeApi(post) {
     const likeCount = document.getElementById("like-number");
     const postId = post.postId;
     likeSession.addEventListener("click", async () => {
-        const requestUrl = `http://localhost:8080/posts/${postId}/like`;
+        const requestUrl = `${SERVER_URL}/posts/${postId}/like`;
         const method = liked ? "DELETE" : "POST";
         try {
             const result = await fetch(requestUrl, {

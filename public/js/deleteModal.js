@@ -13,7 +13,7 @@ cancelBtn.addEventListener('click', () => {
 });
 
 confirmDeleteBtn.addEventListener('click', async () => {
-    const res = await fetch("http://localhost:8080/member", {
+    const res = await fetch(`${SERVER_URL}/member`, {
         method: 'DELETE',
         credentials: 'include'
     });

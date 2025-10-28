@@ -41,8 +41,8 @@ async function loadPosts() {
 
     try{
         const url = lastId
-            ? `http://localhost:8080/posts?lastId=${lastId}`
-            : `http://localhost:8080/posts`;
+            ? `${SERVER_URL}/posts?lastId=${lastId}`
+            : `${SERVER_URL}/posts`;
 
         const response = await fetch(url, {
             method: "GET",

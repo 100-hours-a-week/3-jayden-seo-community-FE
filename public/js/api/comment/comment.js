@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("댓글을 입력해주세요");
         }
         if(editingCommentId) {
-            const result = await fetch(`http://localhost:8080/comments/${editingCommentId}`, {
+            const result = await fetch(`${SERVER_URL}/comments/${editingCommentId}`, {
                 method: "PATCH",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({content}),
@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }else {
 
             try {
-                const result = await fetch(`http://localhost:8080/posts/${postId}/comments`, {
+                const result = await fetch(`${SERVER_URL}/posts/${postId}/comments`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function fetchComments(postId) {
     try{
-        const result = await fetch(`http://localhost:8080/posts/${postId}/comments`, {
+        const result = await fetch(`${SERVER_URL}/posts/${postId}/comments`, {
             method: "GET",
             credentials: "include",
         })

@@ -1,3 +1,5 @@
+const BASE_URL = require("public/config/constant.js");
+
 document.getElementById('checkButton').addEventListener('click', async () => {
     const nickname = document.getElementById('nickname').value.trim();
     const confirmBtn = document.getElementById('confirmButton')
@@ -8,7 +10,7 @@ document.getElementById('checkButton').addEventListener('click', async () => {
 
     try {
         const result = await fetch(
-            `http://localhost:8080/member/nickname/duplicate?nickname=${encodeURIComponent(nickname)}`, {
+            `BASE_URL/member/nickname/duplicate?nickname=${encodeURIComponent(nickname)}`, {
             method: 'GET'
         });
 
@@ -28,7 +30,7 @@ document.getElementById('checkButton').addEventListener('click', async () => {
 
 window.addEventListener('DOMContentLoaded', async () => {
     try{
-        const result = await fetch("http://localhost:8080/member", {
+        const result = await fetch("BASE_URL/member", {
             method: 'GET',
             credentials: 'include'
         })
@@ -61,7 +63,7 @@ document.getElementById("confirmButton").addEventListener("click", async event =
     }
 
     try {
-        const response = await fetch("http://localhost:8080/member", {
+        const response = await fetch("BASE_URL/member", {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"

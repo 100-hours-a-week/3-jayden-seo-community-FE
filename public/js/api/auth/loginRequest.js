@@ -12,7 +12,7 @@ document.getElementById("loginButton").addEventListener('click', async () => {
     }
 
     try{
-        const res = await fetch("http://localhost:8080/auth/login", {
+        const res = await fetch(`${SERVER_URL}/auth/login`, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({email, password}),

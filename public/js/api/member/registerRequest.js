@@ -23,7 +23,7 @@ document.getElementById("registerForm").addEventListener('submit', async (e) => 
     }
 
     try{
-        const response = await fetch("http://localhost:8080/member/register", {
+        const response = await fetch(`${SERVER_URL}/member/register`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

@@ -20,7 +20,7 @@ function closeModal() {
 async function confirmDelete() {
     if (deleteTarget === "post") {
         try{
-            const result = await fetch(`http://localhost:8080/posts/${postId}`, {
+            const result = await fetch(`${SERVER_URL}/posts/${postId}`, {
                 method: "DELETE",
                 credentials: "include"
             })
@@ -37,7 +37,7 @@ async function confirmDelete() {
         }
 
     } else if (deleteTarget === "comment") {
-        const result = await fetch(`http://localhost:8080/comments/${deleteCommentId}`, {
+        const result = await fetch(`${SERVER_URL}/comments/${deleteCommentId}`, {
             method: "DELETE",
             credentials: "include"
         });

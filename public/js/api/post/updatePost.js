@@ -38,7 +38,7 @@ document.getElementById('postForm').addEventListener('submit', async (e) => {
         imageUrls,
     }
     try{
-        const response = await fetch(`http://localhost:8080/posts/${postId}`, {
+        const response = await fetch(`${SERVER_URL}/posts/${postId}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
