@@ -66,7 +66,7 @@ function renderPost(post){
     statNumbers[2].textContent = post.commentCount;
     liked = post.liked;
     if(liked){
-        document.getElementById("like-session").style.backgroundColor = "#4c4646";
+        document.getElementById("like-session").style.backgroundColor = "#d6455d";
     }
     likeApi(post)
 }
@@ -86,7 +86,7 @@ function likeApi(post) {
 
             if (result.ok) {
                 console.log(liked);
-                likeSession.style.background = liked ? "#f5f5f5" : "#4c4646";
+                likeSession.style.background = liked ? "#f5f5f5" : "#d6455d";
                 const curr = parseInt(likeCount.textContent);
                 likeCount.textContent = liked ? String(curr - 1) : String(curr + 1);
                 liked = !liked;
