@@ -15,6 +15,7 @@
         }
     </style>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/footer.css">
 </head>
 <body>
     <div class = "box">
@@ -36,6 +37,14 @@
         <button id="loginButton" class="login_button" type="button">로그인</button>
     </form>
     <button class="redirect-button" onclick="location.href='/register.html'">회원가입</button>
+
+    <footer class="policy-footer">
+        <div class="policy-links">
+            <a href="http://localhost:8080/terms" target="_blank" rel="noopener">이용약관</a>
+            <span class="separator">|</span>
+            <a href="http://localhost:8080/privacy" target="_blank" rel="noopener">개인정보처리방침</a>
+        </div>
+    </footer>
 
     <script src="config/constant.js"></script>
     <script type="module" src="js/api/auth/loginRequest.js"></script>
