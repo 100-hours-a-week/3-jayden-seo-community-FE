@@ -1,3 +1,5 @@
+import {apiRequest} from "./Utils/fetchHelper.js";
+
 const icon = document.getElementById("profileIcon");
 const menu = document.getElementById("dropdownMenu");
 const logout = document.getElementById("logoutButton");
@@ -19,17 +21,9 @@ logout.addEventListener("click", async (e) => {
     e.preventDefault();
 
     try{
-        const response = await fetch(`${SERVER_URL}/auth/logout`, {
-            method: "DELETE",
-            credentials: "include"
-        });
-
-        if(response.ok) {
-            alert("로그아웃 성공");
-            window.location.href="/login.html";
-        }else{
-            alert("로그아웃 실패");
-        }
+        const data = await apiRequest(`${SERVER_URL}/auth/logout`, "DELETE");
+        alert("로그아웃 성공");
+        window.location.href="/login.html";
     }catch(e){
         console.log(e);
         alert("로그아웃 요청 실패!");

@@ -1,3 +1,5 @@
+import {apiRequest} from "../../Utils/fetchHelper.js";
+
 const input = document.getElementById('imageInput');
 const label = document.getElementById('fileLabel');
 const params = new URLSearchParams(window.location.search);
@@ -38,27 +40,18 @@ document.getElementById('postForm').addEventListener('submit', async (e) => {
         imageUrls,
     }
     try{
-        const response = await fetch(`${SERVER_URL}/posts/${postId}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(postData),
-            credentials: 'include',
+        const data = await apiRequest(`${SERVER_URL}/posts/${postId}`, "PATCH", postData);
+        alert("게시글이 성공적으로 수정되었습니다.");
+        window.location.href = "/posts.html";
 
-        });
-        if(response.ok){
-            alert("게시글이 성공적으로 수정되었습니다.");
-            window.location.href = "/posts.html";
-            // document.getElementById("postForm").reset();
-            // fileLabel.textContent = "파일을 선택해주세요.";
-        }else {
-            const error = await response.json();
-            alert(error.message);
-            window.location.href = `/post.html?postId=${postId}`;
-        }
+        // if(response.ok){
+        //     alert("게시글이 성공적으로 수정되었습니다.");
+        //     window.location.href = "/posts.html";
+        //     // document.getElementById("postForm").reset();
+        //     // fileLabel.textContent = "파일을 선택해주세요.";
     }catch (error) {
         console.error("Error:", error);
-        alert("요청 중 오류가 발생했습니다.");
+        alert(error.message);
+        window.location.href = `/post.html?postId=${postId}`;
     }
 })

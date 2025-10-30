@@ -54,19 +54,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 async function fetchComments(postId) {
     try{
-        const result = await fetch(`${SERVER_URL}/posts/${postId}/comments`, {
-            method: "GET",
-            credentials: "include",
-        })
-        const data = await result.json();
-        if(!result.ok) {
-            alert(data.message);
-            return;
-        }
+        const data = await apiRequest(`${SERVER_URL}/posts/${postId}/comments`, "GET");
         renderComments(data.comments);
-    }catch(e){
-        console.log(e);
-        alert("댓글 가져오기 오류!");
+    }catch(err){
+        console.log(err);
+        alert(err.message);
     }
 }
 

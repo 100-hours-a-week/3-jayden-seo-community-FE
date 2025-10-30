@@ -1,3 +1,5 @@
+import {apiRequest} from "./Utils/fetchHelper.js";
+
 const deleteBtn = document.getElementById('deleteButton');
 const modal = document.getElementById('deleteModal');
 const cancelBtn = document.getElementById('cancelButton');
@@ -13,15 +15,11 @@ cancelBtn.addEventListener('click', () => {
 });
 
 confirmDeleteBtn.addEventListener('click', async () => {
-    const res = await fetch(`${SERVER_URL}/member`, {
-        method: 'DELETE',
-        credentials: 'include'
-    });
-
-    if (res.ok) {
+    try{
+        const data = await apiRequest(`${SERVER_URL}/member`, "DELETE");
         alert('회원탈퇴가 완료되었습니다.');
         modal.style.display = 'none';
-    } else {
-        alert('탈퇴 처리 중 오류가 발생했습니다.');
+    }catch (error){
+        alert(error.message);
     }
 });

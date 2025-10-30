@@ -1,3 +1,5 @@
+import {apiRequest} from "../../Utils/fetchHelper.js";
+
 const profileInput = document.getElementById("profileInput");
 const preview = document.getElementById("preview");
 
@@ -62,23 +64,12 @@ document.getElementById("registerForm").addEventListener('submit', async (e) => 
     }
 
     try{
-        const response = await fetch(`${SERVER_URL}/member/register`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(requestBody)
-        });
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            alert(errorData.message || '회원가입에 실패했습니다.');
-            return;
-        }
-
+        const data = await apiRequest(`${SERVER_URL}/member/register`, "POST", requestBody);
         alert("회원가입이 완료되었습니다.");
         window.location.href = "/login.html";
     }catch(err){
         console.log(err);
+        alert(err.message);
+        window.location.href = "/register.html";
     }
 })

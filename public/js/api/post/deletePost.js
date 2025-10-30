@@ -37,19 +37,6 @@ async function confirmDelete() {
             const data = await apiRequest(`${SERVER_URL}/posts/${postId}`, "DELETE");
             alert("게시글이 삭제되었습니다.");
             window.location.href = '../../../posts.html';
-
-            // const result = await fetch(`${SERVER_URL}/posts/${postId}`, {
-            //     method: "DELETE",
-            //     credentials: "include"
-            // })
-            // if(result.ok) {
-            //     alert("게시글이 삭제되었습니다.");
-            //     window.location.href = '../../../posts.html';
-            // }else{
-            //     const res = await result.json();
-            //     console.log(res);
-            //     alert(res.message);
-            // }
         }catch (error){
             alert(error.message);
         }
@@ -63,21 +50,6 @@ async function confirmDelete() {
         }catch (error){
             alert(error.message);
         }
-
-        // const result = await fetch(`${SERVER_URL}/comments/${deleteCommentId}`, {
-        //     method: "DELETE",
-        //     credentials: "include"
-        // });
-        //
-        // if(result.ok) {
-        //     alert("댓글이 삭제되었습니다.");
-        //     window.location.reload();
-        //     return;
-        // }
-        //
-        // const res = await result.json();
-        // console.log(res);
-        // alert(res.message);
     }
     closeModal();
 }
