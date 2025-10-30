@@ -1,3 +1,4 @@
+import {apiRequest} from "../../utils/fetchHelper.js";
 let liked = false
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -10,21 +11,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     try{
-        const response = await fetch(`${SERVER_URL}/posts/${postId}`, {
-            method: "GET",
-            credentials: "include",
-        })
-        if(response.ok){
-            const post = await response.json();
-            renderPost(post)
-        }else{
-            const res = await response.json();
-            alert(res.message);
-            window.location.href = "/posts.html";
-        }
+        const data = await apiRequest(`${SERVER_URL}/posts/${postId}`, "GET");
+        console.log(data);
+        renderPost(data);
+
     }catch(error) {
         console.log(error);
         alert("게시물 정보를 가져올 수 없습니다.");
+        window.location.href = "/posts.html";
     }
 })
 
@@ -78,26 +72,19 @@ function likeApi(post) {
     likeSession.addEventListener("click", async () => {
         const requestUrl = `${SERVER_URL}/posts/${postId}/like`;
         const method = liked ? "DELETE" : "POST";
+
         try {
-            const result = await fetch(requestUrl, {
-                method,
-                credentials: 'include',
-            })
-
-            if (result.ok) {
-                console.log(liked);
-                likeSession.style.background = liked ? "#f5f5f5" : "#d6455d";
-                const curr = parseInt(likeCount.textContent);
-                likeCount.textContent = liked ? String(curr - 1) : String(curr + 1);
-                liked = !liked;
-                return;
-            }
-
-            alert("좋아요 요청 실패! ");
+            const data = await apiRequest(requestUrl, method);
+            console.log(data);
+            console.log(liked);
+            likeSession.style.background = liked ? "#f5f5f5" : "#d6455d";
+            const curr = parseInt(likeCount.textContent);
+            likeCount.textContent = liked ? String(curr - 1) : String(curr + 1);
+            liked = !liked;
 
         } catch (e) {
             console.error(e);
-            alert("좋아요 오류!");
+            alert("좋아요 요청 실패! ");
         }
     })
 }

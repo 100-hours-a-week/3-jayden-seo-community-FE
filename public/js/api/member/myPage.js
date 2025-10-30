@@ -1,25 +1,16 @@
+import {apiRequest} from "../../Utils/fetchHelper.js";
+
 let isNewImage = false;
 
 window.addEventListener('DOMContentLoaded', async () => {
     try{
-        const response = await fetch(`${SERVER_URL}/member`, {
-            method: 'GET',
-            credentials: 'include'
-        })
+        const data = await apiRequest(`${SERVER_URL}/member`, "GET");
 
-        if(!response.ok){
-            alert("로그인이 필요합니다.");
-            window.location.href = "/login.html";
-            return;
-        }else {
-            const res = await response.json();
-
-            document.getElementById('email').value = res.email;
-            document.getElementById('preview').src = res.imageUrl;
-        }
-    }catch (e){
-        console.error(e);
-        alert("서버 오류가 발생했습니다.");
+        document.getElementById('email').value = data.email;
+        document.getElementById('preview').src = data.imageUrl;
+    }catch (err){
+        console.error(err.message);
+        alert(err.message);
         window.location.href = "/login.html";
     }
 })
@@ -50,23 +41,20 @@ document.getElementById('checkButton').addEventListener('click', async () => {
     }
 
     try {
-        const result = await fetch(
-            `${SERVER_URL}/member/nickname/duplicate?nickname=${encodeURIComponent(nickname)}`, {
-                method: 'GET',
-                credentials: 'include'
-        });
-
-        if (result.ok) {
+        const data = await apiRequest(
+            `${SERVER_URL}/member/nickname/duplicate?nickname=${encodeURIComponent(nickname)}`,
+            "GET"
+        )
+        if (!data.isValidate){
             alert("사용 가능한 닉네임입니다!");
             confirmBtn.style.display = 'block'; // ✅ 수정완료 버튼 표시
-        } else {
+        }else{
             alert("이미 존재하는 닉네임입니다.");
-            console.log(result);
             confirmBtn.style.display = 'none'; // ✅ 다시 숨김
         }
-    } catch (err) {
-        console.error(err);
-        alert("닉네임 확인 중 오류가 발생했습니다.");
+    } catch (error) {
+        console.error(error.message);
+        alert("닉네임 확인 중 오류가 발생했습니다." + error.message);
     }
 });
 
@@ -103,27 +91,14 @@ document.getElementById("confirmButton").addEventListener("click", async event =
     }
 
     try {
-        const response = await fetch(`${SERVER_URL}/member`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(requestBody),
-            credentials: "include"
-        });
-
-        if (response.ok) {
-            alert('회원정보가 성공적으로 변경되었습니다.');
-            window.location.reload();
-        } else {
-            const errorData = await response.json();
-            alert(errorData.message);
-        }
+        const data = await apiRequest(`${SERVER_URL}/member`, "PUT", requestBody);
+        alert('회원정보가 성공적으로 변경되었습니다.');
+        window.location.reload();
 
         isNewImage = false;
         sessionStorage.setItem("profileImageUrl", profileImageUrl);
 
     }catch (error) {
-        alert(error.response.data);
+        alert(error.message);
     }
 });

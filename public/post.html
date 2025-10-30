@@ -44,7 +44,7 @@
             </div>
             <div class="post-actions">
                 <button class="edit-btn" id="post-edit-btn">수정</button>
-                <button class="delete-btn" onclick="openModal('post')">삭제</button>
+                <button class="delete-btn" id="deletePost">삭제</button>
             </div>
         </div>
 
@@ -90,7 +90,7 @@
                     </div>
                     <div class="comment-actions">
                         <button class="edit-btn">수정</button>
-                        <button class="delete-btn" onclick="openModal('comment')">삭제</button>
+                        <button class="delete-btn" id="deleteComment">삭제</button>
                     </div>
                 </div>
                 <div class="comment-content">댓글 내용</div>
@@ -103,8 +103,8 @@
         <div class="modal-content">
             <p id="modalText">정말 삭제하시겠습니까?</p>
             <div class="modal-buttons">
-                <button class="cancel-btn" onclick="closeModal()">취소</button>
-                <button class="confirm-btn" onclick="confirmDelete()">확인</button>
+                <button class="cancel-btn">취소</button>
+                <button class="confirm-btn">확인</button>
             </div>
         </div>
     </div>
@@ -119,10 +119,10 @@
 
 
     <script src="config/constant.js"></script>
-    <script src="js/profileImageClick.js"></script>
-    <script src="js/api/post/deletePost.js"></script>
-    <script src="js/api/post/getPost.js"></script>
-    <script src="js/api/comment/comment.js"></script>
+    <script type="module" src="js/profileImageClick.js"></script>
+    <script type="module" src="js/api/post/deletePost.js"></script>
+    <script type="module" src="js/api/post/getPost.js"></script>
+    <script type="module" src="js/api/comment/comment.js"></script>
     <script>
         document.getElementById("homeTitle").addEventListener("click", () => {
             window.location.href = "/posts.html";

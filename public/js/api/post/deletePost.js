@@ -1,11 +1,25 @@
+import {apiRequest} from "../../Utils/fetchHelper.js";
+
 const params = new URLSearchParams(window.location.search);
 const postId = params.get("postId");
 let deleteTarget = null;
-let deleteCommentId = null;
+let deleteId = null;
 
-function openModal(type, commentId) {
+document.getElementById("deletePost").addEventListener("click", () => {
+    openModal("post");
+})
+
+document.querySelector(".confirm-btn").addEventListener("click", () => {
+    confirmDelete();
+})
+
+document.querySelector(".cancel-btn").addEventListener("click", () => {
+    closeModal();
+})
+
+export function openModal(type, id) {
     deleteTarget = type;
-    deleteCommentId = commentId;
+    deleteId = id;
 
     document.getElementById("modalText").textContent =
         type === "post" ? "게시글을 삭제하시겠습니까?" : "댓글을 삭제하시겠습니까?";
@@ -20,37 +34,22 @@ function closeModal() {
 async function confirmDelete() {
     if (deleteTarget === "post") {
         try{
-            const result = await fetch(`${SERVER_URL}/posts/${postId}`, {
-                method: "DELETE",
-                credentials: "include"
-            })
-            if(result.ok) {
-                alert("게시글이 삭제되었습니다.");
-                window.location.href = '../../../posts.html';
-            }else{
-                const res = await result.json();
-                console.log(res);
-                alert(res.message);
-            }
-        }catch (e){
-            alert(e);
+            const data = await apiRequest(`${SERVER_URL}/posts/${postId}`, "DELETE");
+            alert("게시글이 삭제되었습니다.");
+            window.location.href = '../../../posts.html';
+        }catch (error){
+            alert(error.message);
         }
 
     } else if (deleteTarget === "comment") {
-        const result = await fetch(`${SERVER_URL}/comments/${deleteCommentId}`, {
-            method: "DELETE",
-            credentials: "include"
-        });
-
-        if(result.ok) {
+        try {
+            const data = await apiRequest(`${SERVER_URL}/comments/${deleteId}`, "DELETE");
             alert("댓글이 삭제되었습니다.");
             window.location.reload();
             return;
+        }catch (error){
+            alert(error.message);
         }
-
-        const res = await result.json();
-        console.log(res);
-        alert(res.message);
     }
     closeModal();
 }
