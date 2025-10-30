@@ -1,6 +1,7 @@
+import {apiRequest} from "../../Utils/fetchHelper.js";
+
 const emailDocument = document.getElementById("email");
 const passwordDocument = document.getElementById("password");
-import {apiRequest} from "../../Utils/fetchHelper.js";
 
 document.getElementById("loginButton").addEventListener('click', async () => {
     const email = emailDocument.value.trim();

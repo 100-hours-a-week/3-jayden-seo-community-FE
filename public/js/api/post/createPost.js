@@ -1,6 +1,7 @@
+import {apiRequest} from "../../Utils/fetchHelper.js";
+
 const input = document.getElementById('imageInput');
 const label = document.getElementById('fileLabel');
-import {apiRequest} from "../../Utils/fetchHelper.js";
 
 input.addEventListener('change', () => {
     if (input.files.length > 0) {

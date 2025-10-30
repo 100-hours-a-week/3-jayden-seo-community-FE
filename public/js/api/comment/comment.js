@@ -1,10 +1,12 @@
+import {openModal} from "../post/deletePost.js";
+import {apiRequest} from "../../Utils/fetchHelper.js";
+
 let editingCommentId = null;
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     const params = new URLSearchParams(window.location.search);
     const postId = params.get("postId");
-
-    fetchComments(postId);
+    await fetchComments(postId);
 
     if(!postId) {
         alert("잘못된 접근입니다.");
@@ -20,44 +22,31 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!content) {
             alert("댓글을 입력해주세요");
         }
+        console.log(editingCommentId);
         if(editingCommentId) {
-            const result = await fetch(`${SERVER_URL}/comments/${editingCommentId}`, {
-                method: "PATCH",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({content}),
-                credentials: "include",
-            });
+            try {
+                const data = await apiRequest(`${SERVER_URL}/comments/${editingCommentId}`,
+                    "PATCH", {content});
 
-            if (!result.ok) {
-                const res = await result.json();
-                alert(res.message);
-                return;
+                alert("댓글이 수정되었습니다.");
+                editingCommentId = null;
+                window.location.reload();
+
+            }catch (err){
+                alert(err.message);
             }
 
-            alert("댓글이 수정되었습니다.");
-            editingCommentId = null;
-            window.location.reload();
         }else {
 
             try {
-                const result = await fetch(`${SERVER_URL}/posts/${postId}/comments`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({content}),
-                    credentials: "include",
-                })
-                const comment = await result.json();
-                if (!result.ok) {
-                    alert(comment.message);
-                    return;
-                }
-                appendComment(comment);
+                const data = await apiRequest(`${SERVER_URL}/posts/${postId}/comments`,
+                    "POST", {content});
+
+                appendComment(data);
                 textarea.value = ""; // 댓글 입력창 초기화
-            } catch (e) {
-                console.log(e);
-                alert("댓글 생성 오류!");
+            } catch (err) {
+                console.log(err);
+                alert(err.message);
             }
         }
     })
@@ -110,7 +99,7 @@ function appendComment(comment) {
       </div>
       <div class="comment-actions">
         <button class="edit-btn">수정</button>
-        <button class="delete-btn" onclick="openModal('comment', ${comment.commentId})">삭제</button>
+        <button class="delete-btn" id="deleteComment">삭제</button>
       </div>
     </div>
     <div class="comment-content">${comment.content}</div>
@@ -126,5 +115,9 @@ function appendComment(comment) {
         editingCommentId = item.dataset.commentId; // 수정 대상 ID 저장
         submitButton.textContent = "댓글 수정";
     });
+    item.querySelector("#deleteComment").addEventListener("click", () => {
+        openModal("comment", comment.commentId);
+    })
+
     list.prepend(item);
 }

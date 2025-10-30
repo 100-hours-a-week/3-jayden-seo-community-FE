@@ -1,3 +1,5 @@
+import {apiRequest} from "../../Utils/fetchHelper.js";
+
 const postList = document.getElementById("postList");
 const loading = document.getElementById("loading");
 
@@ -43,29 +45,31 @@ async function loadPosts() {
         const url = lastId
             ? `${SERVER_URL}/posts?lastId=${lastId}`
             : `${SERVER_URL}/posts`;
+        const data = await apiRequest(url, "GET");
+        // const response = await fetch(url, {
+        //     method: "GET",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //     },
+        //     credentials: "include",
+        // });
+        // const res = await response.json();
 
-        const response = await fetch(url, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            credentials: "include",
-        });
-        const res = await response.json();
+        // if (!response.ok) {
+        //     console.log(response);
+        //     alert(res.message);
+        //     window.location.href = "/login.html";
+        //     return;
+        // }
 
-        if (!response.ok) {
-            console.log(response);
-            alert(res.message);
-            window.location.href = "/login.html";
-            return;
-        }
+        appendPosts(data.posts);
+        lastId = data.nextCursor
+        hasMore = data.hasNext;
+    }catch(error){
+        console.error(error.message);
+        alert(error.message);
+        window.location.href = "/login.html";
 
-        appendPosts(res.posts);
-        lastId = res.nextCursor
-        hasMore = res.hasNext;
-    }catch(e){
-        console.error(e);
-        alert(e);
     }finally {
         loading.style.display = "none";
         isLoading = false;
