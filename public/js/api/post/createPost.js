@@ -1,5 +1,6 @@
 const input = document.getElementById('imageInput');
 const label = document.getElementById('fileLabel');
+import {apiRequest} from "../../Utils/fetchHelper.js";
 
 input.addEventListener('change', () => {
     if (input.files.length > 0) {
@@ -50,25 +51,13 @@ document.getElementById('postForm').addEventListener('submit', async (e) => {
     }
 
     try{
-        const response = await fetch(`${SERVER_URL}/posts`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(postData),
-            credentials: 'include',
-        });
+        const data = await apiRequest(`${SERVER_URL}/posts`, "POST", postData);
+        alert("게시글이 성공적으로 작성되었습니다.");
+        window.location.assign("/posts.html");
 
-        if(response.ok){
-            alert("게시글이 성공적으로 작성되었습니다.");
-            window.location.assign("/posts.html");
-        }else {
-            const error = await response.json();
-            alert(error.message);
-            window.location.assign("/posts.html");
-        }
     }catch (error) {
-        console.error("Error:", error);
-        alert("요청 중 오류가 발생했습니다.");
+        console.error("Error:", error.message);
+        alert(`${error.message}`);
+        window.location.href = "/posts.html";
     }
 })
