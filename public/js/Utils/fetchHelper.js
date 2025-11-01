@@ -1,3 +1,13 @@
+let accessToken = null;
+
+export function setAccessToken(token){
+    accessToken = token;
+}
+
+export function getAccessToken(){
+    return accessToken;
+}
+
 export async function apiRequest(url, method = "GET", body = null){
     const options = {
         method,
@@ -15,7 +25,6 @@ export async function apiRequest(url, method = "GET", body = null){
         return null
     }
     const data = await response.json();
-    console.log(data);
     if(!response.ok){
         throw new Error(data?.message || "요청 실패")
     }

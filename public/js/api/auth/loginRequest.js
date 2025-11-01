@@ -1,4 +1,4 @@
-import {apiRequest} from "../../Utils/fetchHelper.js";
+import {apiRequest, getAccessToken, setAccessToken} from "../../Utils/fetchHelper.js";
 
 const emailDocument = document.getElementById("email");
 const passwordDocument = document.getElementById("password");
@@ -21,7 +21,9 @@ document.getElementById("loginButton").addEventListener('click', async () => {
 
         alert("로그인 성공!");
         sessionStorage.setItem("profileImageUrl", data.profileImageUrl);
+        setAccessToken(data.accessToken);
         console.log(data.profileImageUrl);
+        console.log(getAccessToken());
         window.location.href = "/posts.html";
 
     }catch(err){
