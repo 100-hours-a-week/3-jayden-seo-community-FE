@@ -1,24 +1,22 @@
-let accessToken = null;
-
-export function setAccessToken(token){
-    accessToken = token;
-}
-
-export function getAccessToken(){
-    return accessToken;
-}
-
 export async function apiRequest(url, method = "GET", body = null){
+    const headers = { 'Content-Type': 'application/json' };
+    const accessToken = sessionStorage.getItem("accessToken");
+
+    if(accessToken){
+        headers.Authorization = `Bearer ${accessToken}`;
+    }
+
     const options = {
         method,
+        headers,
         credentials: "include",
         mode: "cors"
     }
 
     if(body){
-        options.headers = { 'Content-Type': 'application/json' }
         options.body = JSON.stringify(body)
     }
+
     const response = await fetch(url, options);
 
     if(response.status === 204 || response.status === 201) {
