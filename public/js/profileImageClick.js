@@ -22,6 +22,7 @@ logout.addEventListener("click", async (e) => {
 
     try{
         const data = await apiRequest(`${SERVER_URL}/auth/logout`, "DELETE");
+        sessionStorage.removeItem("accessToken");
         alert("로그아웃 성공");
         window.location.href="/login.html";
     }catch(e){

@@ -44,10 +44,16 @@ export async function apiRequest(url, method = "GET", body = null){
                     window.location.href = "/login.html";
                     return;
                 }
+            }else {
+                // 로그인 안 된 경우
+                alert("로그인이 필요합니다.");
+                window.location.href = "/login.html";
+                return;
             }
         }catch (error){
             console.error("401 응답 처리 중 오류:", error);
             window.location.href = "/login.html";
+            return
         }
     }
 
