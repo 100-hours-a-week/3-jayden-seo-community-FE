@@ -19,7 +19,6 @@ document.getElementById("loginButton").addEventListener('click', async () => {
             password: password,
         });
 
-        alert("로그인 성공!");
         sessionStorage.setItem("profileImageUrl", data.profileImageUrl);
         sessionStorage.setItem("accessToken", data.accessToken);
         window.location.href = "/posts.html";
