@@ -6,7 +6,8 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+const UPLOAD_DIR = process.env.UPLOAD_DIR || '/uploads';
 
 const storage = multer.diskStorage({
     destination: './uploads',
@@ -21,7 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
-app.post("/upload", upload.single("file"), (req, res) => {
+app.post(UPLOAD_DIR, upload.single("file"), (req, res) => {
     res.json({
         success: true,
         filename: req.file.filename,
