@@ -22,10 +22,10 @@ logout.addEventListener("click", async (e) => {
 
     try{
         const data = await apiRequest(`${SERVER_URL}/auth/logout`, "DELETE");
-        alert("로그아웃 성공");
+        alert(MESSAGES.LOGOUT.SUCCESS);
         window.location.href="/login.html";
     }catch(e){
         console.log(e);
-        alert("로그아웃 요청 실패!");
+        alert(MESSAGES.LOGOUT.FETCH_FAILED);
     }
 })

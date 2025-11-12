@@ -9,7 +9,7 @@ document.getElementById("loginButton").addEventListener('click', async () => {
 
     // 입력값 검증
     if (!email || !password) {
-        alert('이메일과 비밀번호를 모두 입력해주세요.');
+        alert(MESSAGES.LOGIN.INPUT_REQUIRED);
         return;
     }
 
@@ -18,8 +18,7 @@ document.getElementById("loginButton").addEventListener('click', async () => {
             email: email,
             password: password,
         });
-
-        alert("로그인 성공!");
+        alert(MESSAGES.LOGIN.SUCCESS);
         sessionStorage.setItem("profileImageUrl", data.profileImageUrl);
         console.log(data.profileImageUrl);
         window.location.href = "/posts.html";

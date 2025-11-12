@@ -17,9 +17,9 @@ cancelBtn.addEventListener('click', () => {
 confirmDeleteBtn.addEventListener('click', async () => {
     try{
         const data = await apiRequest(`${SERVER_URL}/member`, "DELETE");
-        alert('회원탈퇴가 완료되었습니다.');
+        alert(MESSAGES.MEMBER.DELETE_ACCOUNT_SUCCESS);
         modal.style.display = 'none';
     }catch (error){
-        alert(error.message);
+        alert(MESSAGES.MEMBER.DELETE_ACCOUNT_FAIL);
     }
 });

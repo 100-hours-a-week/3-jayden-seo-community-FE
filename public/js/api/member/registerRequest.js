@@ -29,7 +29,7 @@ document.getElementById("registerForm").addEventListener('submit', async (e) => 
     const profileFile = profileInput.files[0];
 
     if (password !== passwordConfirm) {
-        alert("비밀번호가 일치하지 않습니다.")
+        alert(MESSAGES.MEMBER.PASSWORD_MISMATCH);
         return;
     }
 
@@ -45,13 +45,13 @@ document.getElementById("registerForm").addEventListener('submit', async (e) => 
                 body: formData,
             });
             if(!result.ok){
-                alert("이미지 업로드 실패");
+                alert(MESSAGES.ERROR.IMAGE_UPLOAD_FAIL);
                 return
             }
             const data = await result.json();
             profileImageUrl = data.path;
         }catch (error) {
-            alert("이미지 업로드 실패");
+            alert(MESSAGES.ERROR.IMAGE_UPLOAD_FAIL);
             console.log(error);
         }
     }
@@ -65,7 +65,7 @@ document.getElementById("registerForm").addEventListener('submit', async (e) => 
 
     try{
         const data = await apiRequest(`${SERVER_URL}/member/register`, "POST", requestBody);
-        alert("회원가입이 완료되었습니다.");
+        alert(MESSAGES.SIGNUP.SUCCESS);
         window.location.href = "/login.html";
     }catch(err){
         console.log(err);

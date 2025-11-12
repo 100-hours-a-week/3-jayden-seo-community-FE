@@ -7,7 +7,7 @@ document.getElementById("loginForm").addEventListener("submit", async event => {
     const passwordConfirm = document.getElementById("passwordConfirm").value;
 
     if (password !== passwordConfirm) {
-        alert("비밀번호가 일치하지 않습니다.")
+        alert(MESSAGES.MEMBER.PASSWORD_MISMATCH);
         return;
     }
     const requestBody = {
@@ -17,7 +17,7 @@ document.getElementById("loginForm").addEventListener("submit", async event => {
 
     try {
         const data = await apiRequest(`${SERVER_URL}/member/password`, "PUT", requestBody);
-        alert('비밀번호가 성공적으로 변경되었습니다.');
+        alert(MESSAGES.MEMBER.UPDATE_PASSWORD_SUCCESS);
     }catch (error) {
         alert(error.message);
     }

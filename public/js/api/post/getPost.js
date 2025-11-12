@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const postId = params.get("postId");
 
     if(!postId) {
-        alert("잘못된 접근입니다.");
+        alert(MESSAGES.INVALID_ACCESS);
         window.location.href = "/posts.html";
     }
 
@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     }catch(error) {
         console.log(error);
-        alert("게시물 정보를 가져올 수 없습니다.");
+        alert(MESSAGES.POST.FETCH_FAILED);
         window.location.href = "/posts.html";
     }
 })
@@ -84,7 +84,7 @@ function likeApi(post) {
 
         } catch (e) {
             console.error(e);
-            alert("좋아요 요청 실패! ");
+            alert(MESSAGES.LIKE.REQUEST_FAILED);
         }
     })
 }

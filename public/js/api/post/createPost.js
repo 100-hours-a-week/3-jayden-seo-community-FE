@@ -20,7 +20,7 @@ document.getElementById('postForm').addEventListener('submit', async (e) => {
     const imageUrls = [];
 
     if(!title || !content) {
-        alert("제목과 내용 모두 입력해주세요.");
+        alert(MESSAGES.POST.TITLE_CONTENT_REQUIRED);
     }
 
     const postImage = imageInput.files[0];
@@ -34,14 +34,14 @@ document.getElementById('postForm').addEventListener('submit', async (e) => {
                 body: formData,
             });
             if(!response.ok){
-                alert("이미지 업로드 실패");
+                alert(MESSAGES.ERROR.IMAGE_UPLOAD_FAIL);
                 return
             }
             const res = await response.json();
             imageUrls.push(res.path);
 
         }catch (error){
-            alert("이미지 업로드 실패!");
+            alert(MESSAGES.ERROR.IMAGE_UPLOAD_FAIL);
         }
     }
 
@@ -53,7 +53,7 @@ document.getElementById('postForm').addEventListener('submit', async (e) => {
 
     try{
         const data = await apiRequest(`${SERVER_URL}/posts`, "POST", postData);
-        alert("게시글이 성공적으로 작성되었습니다.");
+        alert(MESSAGES.POST.CREATE_SUCCESS);
         window.location.assign("/posts.html");
 
     }catch (error) {

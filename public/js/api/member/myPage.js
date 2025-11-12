@@ -36,7 +36,7 @@ document.getElementById('checkButton').addEventListener('click', async () => {
     const nickname = document.getElementById('nickname').value.trim();
     const confirmBtn = document.getElementById('confirmButton')
     if (!nickname) {
-        alert("닉네임을 입력해주세요.");
+        alert(MESSAGES.MEMBER.NICKNAME_REQUIRED);
         return;
     }
 
@@ -46,15 +46,15 @@ document.getElementById('checkButton').addEventListener('click', async () => {
             "GET"
         )
         if (!data.isValidate){
-            alert("사용 가능한 닉네임입니다!");
+            alert(MESSAGES.MEMBER.NICKNAME_AVAILABLE);
             confirmBtn.style.display = 'block'; // ✅ 수정완료 버튼 표시
         }else{
-            alert("이미 존재하는 닉네임입니다.");
+            alert(MESSAGES.MEMBER.NICKNAME_UNAVAILABLE);
             confirmBtn.style.display = 'none'; // ✅ 다시 숨김
         }
     } catch (error) {
         console.error(error.message);
-        alert("닉네임 확인 중 오류가 발생했습니다." + error.message);
+        alert(MESSAGES.MEMBER.NICKNAME_CHECK_ERROR)
     }
 });
 
@@ -74,13 +74,13 @@ document.getElementById("confirmButton").addEventListener("click", async event =
                 body: formData,
             });
             if(!result.ok){
-                alert("이미지 업로드 실패");
+                alert(MESSAGES.ERROR.IMAGE_UPLOAD_FAIL);
                 return
             }
             const data = await result.json();
             profileImageUrl = data.path;
         }catch (error) {
-            alert("이미지 업로드 실패");
+            alert(MESSAGES.ERROR.IMAGE_UPLOAD_FAIL);
             console.log(error);
         }
     }
@@ -92,7 +92,7 @@ document.getElementById("confirmButton").addEventListener("click", async event =
 
     try {
         const data = await apiRequest(`${SERVER_URL}/member`, "PUT", requestBody);
-        alert('회원정보가 성공적으로 변경되었습니다.');
+        alert(MESSAGES.MEMBER.UPDATE_PROFILE_SUCCESS);
         window.location.reload();
 
         isNewImage = false;
