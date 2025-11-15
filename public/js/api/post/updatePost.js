@@ -26,26 +26,46 @@ document.getElementById('postForm').addEventListener('submit', async (e) => {
     }
 
     const postImage = imageInput.files[0];
+    let uploadUrl;
 
     if (postImage){
-        try{
-            const formData = new FormData();
-            formData.append("file", postImage);
+        // try{
+        //     const formData = new FormData();
+        //     formData.append("file", postImage);
+        //
+        //     const response = await fetch(`${IMAGE_SERVER_URL}/upload`, {
+        //         method: "POST",
+        //         body: formData,
+        //     });
+        //     if(!response.ok){
+        //         alert(MESSAGES.ERROR.IMAGE_UPLOAD_FAIL);
+        //         return
+        //     }
+        //     const res = await response.json();
+        //     imageUrls = [res.path];
+        //
+        // }catch (error){
+        //     alert(MESSAGES.ERROR.IMAGE_UPLOAD_FAIL);
+        // }
+        const res = await fetch("https://16jdujbqqc.execute-api.ap-northeast-2.amazonaws.com/upload/presigned", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                fileName: postImage.name,
+                fileType: postImage.type,
+                folder: "post",
+            })
+        })
+        const data = await res.json();
+        const imageUrl = data.key;
+        uploadUrl = data.uploadUrl;
 
-            const response = await fetch(`${IMAGE_SERVER_URL}/upload`, {
-                method: "POST",
-                body: formData,
-            });
-            if(!response.ok){
-                alert(MESSAGES.ERROR.IMAGE_UPLOAD_FAIL);
-                return
-            }
-            const res = await response.json();
-            imageUrls = [res.path];
-
-        }catch (error){
-            alert(MESSAGES.ERROR.IMAGE_UPLOAD_FAIL);
-        }
+        await fetch(uploadUrl, {
+            method: "PUT",
+            headers: {"Content-Type": postImage.type},
+            body: postImage
+        });
+        imageUrls = [imageUrl];
     }
 
     const postData = {

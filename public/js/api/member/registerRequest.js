@@ -35,26 +35,52 @@ document.getElementById("registerForm").addEventListener('submit', async (e) => 
 
     // 임시 프로필 사진 이미지 url
     let profileImageUrl = "https://example.com/default-profile.png";
+    let uploadUrl;
 
+    // if(profileFile){
+    //     const formData = new FormData();
+    //     formData.append("file", profileFile);
+    //     try{
+    //         const result = await fetch(`${IMAGE_SERVER_URL}/upload`, {
+    //             method: "POST",
+    //             body: formData,
+    //         });
+    //         if(!result.ok){
+    //             alert(MESSAGES.ERROR.IMAGE_UPLOAD_FAIL);
+    //             return
+    //         }
+    //         const data = await result.json();
+    //         profileImageUrl = data.path;
+    //     }catch (error) {
+    //         alert(MESSAGES.ERROR.IMAGE_UPLOAD_FAIL);
+    //         console.log(error);
+    //     }
+    // }
     if(profileFile){
-        const formData = new FormData();
-        formData.append("file", profileFile);
         try{
-            const result = await fetch(`${IMAGE_SERVER_URL}/upload`, {
+            const res = await fetch("https://16jdujbqqc.execute-api.ap-northeast-2.amazonaws.com/upload/presigned", {
                 method: "POST",
-                body: formData,
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    fileName: profileFile.name,
+                    fileType: profileFile.type,
+                    folder: "profile",
+                })
+            })
+            const data = await res.json();
+            uploadUrl = data.uploadUrl;
+            profileImageUrl = data.key;
+
+            await fetch(uploadUrl, {
+                method: "PUT",
+                headers: {"Content-Type": profileFile.type},
+                body: profileFile
             });
-            if(!result.ok){
-                alert(MESSAGES.ERROR.IMAGE_UPLOAD_FAIL);
-                return
-            }
-            const data = await result.json();
-            profileImageUrl = data.path;
-        }catch (error) {
+        }catch(e){
             alert(MESSAGES.ERROR.IMAGE_UPLOAD_FAIL);
-            console.log(error);
         }
     }
+
     const requestBody = {
         email,
         password,

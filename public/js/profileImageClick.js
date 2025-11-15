@@ -6,7 +6,7 @@ const logout = document.getElementById("logoutButton");
 const profile = document.getElementById("profileIcon");
 
 profile.src = sessionStorage.getItem("profileImageUrl");
-
+console.log(sessionStorage.getItem("profileImageUrl"));
 icon.addEventListener("click", () => {
     menu.style.display = menu.style.display === "none" ? "block" : "none";
 });

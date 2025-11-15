@@ -7,7 +7,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         const data = await apiRequest(`${SERVER_URL}/member`, "GET");
 
         document.getElementById('email').value = data.email;
-        document.getElementById('preview').src = data.imageUrl;
+        document.getElementById('preview').src = IMAGE_SERVEL_URL2 + data.imageUrl;
     }catch (err){
         console.error(err.message);
         alert(err.message);
@@ -64,24 +64,47 @@ document.getElementById("confirmButton").addEventListener("click", async event =
     const nickname = document.getElementById("nickname").value;
     const profileFile = document.getElementById("profileInput").files[0];
     let profileImageUrl = null;
-
+    // if(isNewImage){
+    //     const formData = new FormData();
+    //     formData.append("file", profileFile);
+    //     try{
+    //         const result = await fetch(`${IMAGE_SERVER_URL}/upload`, {
+    //             method: "POST",
+    //             body: formData,
+    //         });
+    //         if(!result.ok){
+    //             alert(MESSAGES.ERROR.IMAGE_UPLOAD_FAIL);
+    //             return
+    //         }
+    //         const data = await result.json();
+    //         profileImageUrl = data.path;
+    //     }catch (error) {
+    //         alert(MESSAGES.ERROR.IMAGE_UPLOAD_FAIL);
+    //         console.log(error);
+    //     }
+    // }
     if(isNewImage){
-        const formData = new FormData();
-        formData.append("file", profileFile);
         try{
-            const result = await fetch(`${IMAGE_SERVER_URL}/upload`, {
+            const res = await fetch("https://16jdujbqqc.execute-api.ap-northeast-2.amazonaws.com/upload/presigned", {
                 method: "POST",
-                body: formData,
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    fileName: profileFile.name,
+                    fileType: profileFile.type,
+                    folder: "profile",
+                })
+            })
+            const data = await res.json();
+            const uploadUrl = data.uploadUrl;
+            profileImageUrl = data.key;
+
+            await fetch(uploadUrl, {
+                method: "PUT",
+                headers: {"Content-Type": profileFile.type},
+                body: profileFile
             });
-            if(!result.ok){
-                alert(MESSAGES.ERROR.IMAGE_UPLOAD_FAIL);
-                return
-            }
-            const data = await result.json();
-            profileImageUrl = data.path;
-        }catch (error) {
+        }catch(e){
             alert(MESSAGES.ERROR.IMAGE_UPLOAD_FAIL);
-            console.log(error);
         }
     }
 
@@ -96,7 +119,8 @@ document.getElementById("confirmButton").addEventListener("click", async event =
         window.location.reload();
 
         isNewImage = false;
-        sessionStorage.setItem("profileImageUrl", profileImageUrl);
+        console.log(profileImageUrl);
+        sessionStorage.setItem("profileImageUrl", IMAGE_SERVEL_URL2 + profileImageUrl);
 
     }catch (error) {
         alert(error.message);

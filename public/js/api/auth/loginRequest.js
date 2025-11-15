@@ -19,8 +19,7 @@ document.getElementById("loginButton").addEventListener('click', async () => {
             password: password,
         });
         alert(MESSAGES.LOGIN.SUCCESS);
-        sessionStorage.setItem("profileImageUrl", data.profileImageUrl);
-        console.log(data.profileImageUrl);
+        sessionStorage.setItem("profileImageUrl", IMAGE_SERVEL_URL2 + data.profileImageUrl);
         window.location.href = "/posts.html";
 
     }catch(err){

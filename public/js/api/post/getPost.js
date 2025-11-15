@@ -29,7 +29,7 @@ function renderPost(post){
 
     // 작성자, 프로필 이미지, 날짜
     document.querySelector(".post-writer").textContent = post.authorName;
-    document.querySelector("#postProfileIcon").src = post.authorProfileImage || "/images/default-profile.png";
+    document.querySelector("#postProfileIcon").src = IMAGE_SERVEL_URL2 + post.authorProfileImage || "/images/default-profile.png";
     document.querySelector(".post-date").textContent = post.updatedAt;
 
     // 본문 이미지
@@ -39,7 +39,7 @@ function renderPost(post){
     if (post.postImageUrls && post.postImageUrls.length > 0) {
         post.postImageUrls.forEach(url => {
             const img = document.createElement("img");
-            img.src = url;
+            img.src = IMAGE_SERVEL_URL2 + url;
             img.alt = "게시글 이미지";
             img.style.width = "100%";
             img.style.marginBottom = "10px";
