@@ -52,7 +52,7 @@ async function loadPosts() {
         hasMore = data.hasNext;
     }catch(error){
         console.error(error.message);
-        alert(error.message);
+        // alert(error.message);
         window.location.href = "/login.html";
 
     }finally {

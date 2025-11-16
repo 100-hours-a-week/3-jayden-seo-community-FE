@@ -18,10 +18,12 @@ document.getElementById("loginButton").addEventListener('click', async () => {
             email: email,
             password: password,
         });
-        alert(MESSAGES.LOGIN.SUCCESS);
-        sessionStorage.setItem("profileImageUrl", IMAGE_SERVEL_URL2 + data.profileImageUrl);
-        window.location.href = "/posts.html";
 
+        sessionStorage.setItem("profileImageUrl", IMAGE_SERVEL_URL2 + data.profileImageUrl);
+        sessionStorage.setItem("accessToken", data.accessToken);
+        alert(MESSAGES.LOGIN.SUCCESS);
+        window.location.href = "/posts.html";
+      
     }catch(err){
         console.error(err);
         alert(`${err.message}`);
