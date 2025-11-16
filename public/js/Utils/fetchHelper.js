@@ -1,7 +1,7 @@
 export async function apiRequest(url, method = "GET", body = null){
     const headers = { 'Content-Type': 'application/json' };
     const accessToken = sessionStorage.getItem("accessToken");
-
+    console.log(url);
     if(accessToken){
         headers.Authorization = `Bearer ${accessToken}`;
     }
