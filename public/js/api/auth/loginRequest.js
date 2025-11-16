@@ -9,7 +9,7 @@ document.getElementById("loginButton").addEventListener('click', async () => {
 
     // 입력값 검증
     if (!email || !password) {
-        alert('이메일과 비밀번호를 모두 입력해주세요.');
+        alert(MESSAGES.LOGIN.INPUT_REQUIRED);
         return;
     }
 
@@ -19,10 +19,11 @@ document.getElementById("loginButton").addEventListener('click', async () => {
             password: password,
         });
 
-        sessionStorage.setItem("profileImageUrl", data.profileImageUrl);
+        sessionStorage.setItem("profileImageUrl", IMAGE_SERVEL_URL2 + data.profileImageUrl);
         sessionStorage.setItem("accessToken", data.accessToken);
+        alert(MESSAGES.LOGIN.SUCCESS);
         window.location.href = "/posts.html";
-
+      
     }catch(err){
         console.error(err);
         alert(`${err.message}`);

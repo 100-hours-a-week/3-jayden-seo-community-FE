@@ -29,32 +29,58 @@ document.getElementById("registerForm").addEventListener('submit', async (e) => 
     const profileFile = profileInput.files[0];
 
     if (password !== passwordConfirm) {
-        alert("비밀번호가 일치하지 않습니다.")
+        alert(MESSAGES.MEMBER.PASSWORD_MISMATCH);
         return;
     }
 
     // 임시 프로필 사진 이미지 url
     let profileImageUrl = "https://example.com/default-profile.png";
+    let uploadUrl;
 
+    // if(profileFile){
+    //     const formData = new FormData();
+    //     formData.append("file", profileFile);
+    //     try{
+    //         const result = await fetch(`${IMAGE_SERVER_URL}/upload`, {
+    //             method: "POST",
+    //             body: formData,
+    //         });
+    //         if(!result.ok){
+    //             alert(MESSAGES.ERROR.IMAGE_UPLOAD_FAIL);
+    //             return
+    //         }
+    //         const data = await result.json();
+    //         profileImageUrl = data.path;
+    //     }catch (error) {
+    //         alert(MESSAGES.ERROR.IMAGE_UPLOAD_FAIL);
+    //         console.log(error);
+    //     }
+    // }
     if(profileFile){
-        const formData = new FormData();
-        formData.append("file", profileFile);
         try{
-            const result = await fetch(`${IMAGE_SERVER_URL}/upload`, {
+            const res = await fetch("https://16jdujbqqc.execute-api.ap-northeast-2.amazonaws.com/upload/presigned", {
                 method: "POST",
-                body: formData,
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    fileName: profileFile.name,
+                    fileType: profileFile.type,
+                    folder: "profile",
+                })
+            })
+            const data = await res.json();
+            uploadUrl = data.uploadUrl;
+            profileImageUrl = data.key;
+
+            await fetch(uploadUrl, {
+                method: "PUT",
+                headers: {"Content-Type": profileFile.type},
+                body: profileFile
             });
-            if(!result.ok){
-                alert("이미지 업로드 실패");
-                return
-            }
-            const data = await result.json();
-            profileImageUrl = data.path;
-        }catch (error) {
-            alert("이미지 업로드 실패");
-            console.log(error);
+        }catch(e){
+            alert(MESSAGES.ERROR.IMAGE_UPLOAD_FAIL);
         }
     }
+
     const requestBody = {
         email,
         password,
@@ -65,7 +91,7 @@ document.getElementById("registerForm").addEventListener('submit', async (e) => 
 
     try{
         const data = await apiRequest(`${SERVER_URL}/member/register`, "POST", requestBody);
-        alert("회원가입이 완료되었습니다.");
+        alert(MESSAGES.SIGNUP.SUCCESS);
         window.location.href = "/login.html";
     }catch(err){
         console.log(err);

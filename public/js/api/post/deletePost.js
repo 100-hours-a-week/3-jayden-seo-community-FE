@@ -22,7 +22,7 @@ export function openModal(type, id) {
     deleteId = id;
 
     document.getElementById("modalText").textContent =
-        type === "post" ? "게시글을 삭제하시겠습니까?" : "댓글을 삭제하시겠습니까?";
+        type === "post" ? MESSAGES.POST.DELETE_CONFIRMATION: MESSAGES.COMMENT.DELETE_CONFIRMATION;
     document.getElementById("deleteModal").style.display = "flex";
 }
 
@@ -35,7 +35,7 @@ async function confirmDelete() {
     if (deleteTarget === "post") {
         try{
             const data = await apiRequest(`${SERVER_URL}/posts/${postId}`, "DELETE");
-            alert("게시글이 삭제되었습니다.");
+            alert(MESSAGES.POST.DELETE_SUCCESS);
             window.location.href = '../../../posts.html';
         }catch (error){
             alert(error.message);
@@ -44,7 +44,7 @@ async function confirmDelete() {
     } else if (deleteTarget === "comment") {
         try {
             const data = await apiRequest(`${SERVER_URL}/comments/${deleteId}`, "DELETE");
-            alert("댓글이 삭제되었습니다.");
+            alert(MESSAGES.COMMENT.DELETE_SUCCESS);
             window.location.reload();
             return;
         }catch (error){

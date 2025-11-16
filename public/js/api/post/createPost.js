@@ -18,30 +18,55 @@ document.getElementById('postForm').addEventListener('submit', async (e) => {
     const content = document.getElementById("content").value.trim();
     const imageInput = document.getElementById("imageInput");
     const imageUrls = [];
+    let uploadUrl;
 
     if(!title || !content) {
-        alert("제목과 내용 모두 입력해주세요.");
+        alert(MESSAGES.POST.TITLE_CONTENT_REQUIRED);
     }
 
     const postImage = imageInput.files[0];
     if(postImage) {
+        // try{
+        //     const formData = new FormData();
+        //     formData.append("file", postImage);
+        //
+        //     const response = await fetch(`${IMAGE_SERVER_URL}/upload`, {
+        //         method: "POST",
+        //         body: formData,
+        //     });
+        //     if(!response.ok){
+        //         alert(MESSAGES.ERROR.IMAGE_UPLOAD_FAIL);
+        //         return
+        //     }
+        //     const res = await response.json();
+        //     imageUrls.push(res.path);
+        //
+        // }catch (error){
+        //     alert(MESSAGES.ERROR.IMAGE_UPLOAD_FAIL);
+        // }
         try{
-            const formData = new FormData();
-            formData.append("file", postImage);
-
-            const response = await fetch(`${IMAGE_SERVER_URL}/upload`, {
+            const res = await fetch("https://16jdujbqqc.execute-api.ap-northeast-2.amazonaws.com/upload/presigned", {
                 method: "POST",
-                body: formData,
-            });
-            if(!response.ok){
-                alert("이미지 업로드 실패");
-                return
-            }
-            const res = await response.json();
-            imageUrls.push(res.path);
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    fileName: postImage.name,
+                    fileType: postImage.type,
+                    folder: "post",
+                })
+            })
+            const data = await res.json();
+            const imageUrl = data.key;
+            uploadUrl = data.uploadUrl;
 
-        }catch (error){
-            alert("이미지 업로드 실패!");
+            await fetch(uploadUrl, {
+                method: "PUT",
+                headers: {"Content-Type": postImage.type},
+                body: postImage
+            });
+
+            imageUrls.push(imageUrl);
+        }catch(error) {
+            alert(MESSAGES.ERROR.IMAGE_UPLOAD_FAIL);
         }
     }
 
@@ -53,7 +78,7 @@ document.getElementById('postForm').addEventListener('submit', async (e) => {
 
     try{
         const data = await apiRequest(`${SERVER_URL}/posts`, "POST", postData);
-        alert("게시글이 성공적으로 작성되었습니다.");
+        alert(MESSAGES.POST.CREATE_SUCCESS);
         window.location.assign("/posts.html");
 
     }catch (error) {

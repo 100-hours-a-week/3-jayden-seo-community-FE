@@ -7,7 +7,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         const data = await apiRequest(`${SERVER_URL}/member`, "GET");
 
         document.getElementById('email').value = data.email;
-        document.getElementById('preview').src = data.imageUrl;
+        document.getElementById('preview').src = IMAGE_SERVEL_URL2 + data.imageUrl;
     }catch (err){
         console.error(err.message);
         alert(err.message);
@@ -36,7 +36,7 @@ document.getElementById('checkButton').addEventListener('click', async () => {
     const nickname = document.getElementById('nickname').value.trim();
     const confirmBtn = document.getElementById('confirmButton')
     if (!nickname) {
-        alert("닉네임을 입력해주세요.");
+        alert(MESSAGES.MEMBER.NICKNAME_REQUIRED);
         return;
     }
 
@@ -46,15 +46,15 @@ document.getElementById('checkButton').addEventListener('click', async () => {
             "GET"
         )
         if (!data.isValidate){
-            alert("사용 가능한 닉네임입니다!");
+            alert(MESSAGES.MEMBER.NICKNAME_AVAILABLE);
             confirmBtn.style.display = 'block'; // ✅ 수정완료 버튼 표시
         }else{
-            alert("이미 존재하는 닉네임입니다.");
+            alert(MESSAGES.MEMBER.NICKNAME_UNAVAILABLE);
             confirmBtn.style.display = 'none'; // ✅ 다시 숨김
         }
     } catch (error) {
         console.error(error.message);
-        alert("닉네임 확인 중 오류가 발생했습니다." + error.message);
+        alert(MESSAGES.MEMBER.NICKNAME_CHECK_ERROR)
     }
 });
 
@@ -64,24 +64,47 @@ document.getElementById("confirmButton").addEventListener("click", async event =
     const nickname = document.getElementById("nickname").value;
     const profileFile = document.getElementById("profileInput").files[0];
     let profileImageUrl = null;
-
+    // if(isNewImage){
+    //     const formData = new FormData();
+    //     formData.append("file", profileFile);
+    //     try{
+    //         const result = await fetch(`${IMAGE_SERVER_URL}/upload`, {
+    //             method: "POST",
+    //             body: formData,
+    //         });
+    //         if(!result.ok){
+    //             alert(MESSAGES.ERROR.IMAGE_UPLOAD_FAIL);
+    //             return
+    //         }
+    //         const data = await result.json();
+    //         profileImageUrl = data.path;
+    //     }catch (error) {
+    //         alert(MESSAGES.ERROR.IMAGE_UPLOAD_FAIL);
+    //         console.log(error);
+    //     }
+    // }
     if(isNewImage){
-        const formData = new FormData();
-        formData.append("file", profileFile);
         try{
-            const result = await fetch(`${IMAGE_SERVER_URL}/upload`, {
+            const res = await fetch("https://16jdujbqqc.execute-api.ap-northeast-2.amazonaws.com/upload/presigned", {
                 method: "POST",
-                body: formData,
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    fileName: profileFile.name,
+                    fileType: profileFile.type,
+                    folder: "profile",
+                })
+            })
+            const data = await res.json();
+            const uploadUrl = data.uploadUrl;
+            profileImageUrl = data.key;
+
+            await fetch(uploadUrl, {
+                method: "PUT",
+                headers: {"Content-Type": profileFile.type},
+                body: profileFile
             });
-            if(!result.ok){
-                alert("이미지 업로드 실패");
-                return
-            }
-            const data = await result.json();
-            profileImageUrl = data.path;
-        }catch (error) {
-            alert("이미지 업로드 실패");
-            console.log(error);
+        }catch(e){
+            alert(MESSAGES.ERROR.IMAGE_UPLOAD_FAIL);
         }
     }
 
@@ -92,11 +115,12 @@ document.getElementById("confirmButton").addEventListener("click", async event =
 
     try {
         const data = await apiRequest(`${SERVER_URL}/member`, "PUT", requestBody);
-        alert('회원정보가 성공적으로 변경되었습니다.');
+        alert(MESSAGES.MEMBER.UPDATE_PROFILE_SUCCESS);
         window.location.reload();
 
         isNewImage = false;
-        sessionStorage.setItem("profileImageUrl", profileImageUrl);
+        console.log(profileImageUrl);
+        sessionStorage.setItem("profileImageUrl", IMAGE_SERVEL_URL2 + profileImageUrl);
 
     }catch (error) {
         alert(error.message);

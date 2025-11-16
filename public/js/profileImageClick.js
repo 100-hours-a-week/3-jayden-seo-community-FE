@@ -6,7 +6,7 @@ const logout = document.getElementById("logoutButton");
 const profile = document.getElementById("profileIcon");
 
 profile.src = sessionStorage.getItem("profileImageUrl");
-
+console.log(sessionStorage.getItem("profileImageUrl"));
 icon.addEventListener("click", () => {
     menu.style.display = menu.style.display === "none" ? "block" : "none";
 });
@@ -23,10 +23,10 @@ logout.addEventListener("click", async (e) => {
     try{
         const data = await apiRequest(`${SERVER_URL}/auth/logout`, "DELETE");
         sessionStorage.removeItem("accessToken");
-        alert("로그아웃 성공");
+        alert(MESSAGES.LOGOUT.SUCCESS);
         window.location.href="/login.html";
     }catch(e){
         console.log(e);
-        alert("로그아웃 요청 실패!");
+        alert(MESSAGES.LOGOUT.FETCH_FAILED);
     }
 })

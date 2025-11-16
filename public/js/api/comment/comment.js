@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     await fetchComments(postId);
 
     if(!postId) {
-        alert("잘못된 접근입니다.");
+        alert(MESSAGES.ERROR.INVALID_ACCESS);
         window.location.href = "/posts.html";
     }
 
@@ -20,15 +20,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         const content = textarea.value.trim();
 
         if (!content) {
-            alert("댓글을 입력해주세요");
+            alert(MESSAGES.COMMENT.REQUIRED);
         }
         console.log(editingCommentId);
         if(editingCommentId) {
             try {
                 const data = await apiRequest(`${SERVER_URL}/comments/${editingCommentId}`,
                     "PATCH", {content});
-
-                alert("댓글이 수정되었습니다.");
+                alert(MESSAGES.COMMENT.SUCCESS);
                 editingCommentId = null;
                 window.location.reload();
 
@@ -70,7 +69,7 @@ function renderComments(comments) {
         list.innerHTML = `<p style="color:#777;">댓글이 없습니다.</p>`;
         return;
     }
-
+    alert(MESSAGES.ERROR.IMAGE_UPLOAD_FAIL);
     comments.forEach((c) => appendComment(c));
 }
 

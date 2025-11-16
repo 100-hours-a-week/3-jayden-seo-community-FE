@@ -23,7 +23,7 @@ function appendPosts(posts) {
         <span>조회수 ${p.viewCount}</span>
       </div>
       <div class="post-author">
-        <img src="${p.authorProfileImage}" class="author-img" alt="user">
+        <img src="${IMAGE_SERVEL_URL2}${p.authorProfileImage}" class="author-img" alt="user">
         <span class="author-name">${p.authorName}</span>
       </div>
     `;
