@@ -1,4 +1,4 @@
-name: Express Docker CI
+name: Express Docker CD
 
 on:
   push:
