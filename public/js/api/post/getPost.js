@@ -1,4 +1,4 @@
-import {apiRequest} from "../../utils/fetchHelper.js";
+import {apiRequest} from "../../Utils/fetchHelper.js";
 let liked = false
 
 document.addEventListener("DOMContentLoaded", async () => {
