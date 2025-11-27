@@ -69,7 +69,6 @@ function renderComments(comments) {
         list.innerHTML = `<p style="color:#777;">댓글이 없습니다.</p>`;
         return;
     }
-    alert(MESSAGES.ERROR.IMAGE_UPLOAD_FAIL);
     comments.forEach((c) => appendComment(c));
 }
 
