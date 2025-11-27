@@ -6,7 +6,6 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 const app = express();
-const PORT = process.env.PORT || 3000;
 const UPLOAD_DIR = process.env.UPLOAD_DIR || '/uploads';
 
 const storage = multer.diskStorage({
@@ -20,7 +19,7 @@ const upload = multer({ storage });
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
+app.set("trust proxy", 1);
 
 app.post(UPLOAD_DIR, upload.single("file"), (req, res) => {
     res.json({
