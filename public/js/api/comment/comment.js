@@ -33,6 +33,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             }catch (err){
                 alert(err.message);
+                console.log(err)
             }
 
         }else {
