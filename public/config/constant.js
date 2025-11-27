@@ -1,4 +1,4 @@
-window.SERVER_URL = "https//www.jayden-community.site/api";
+window.SERVER_URL = "https://www.jayden-community.site/api";
 window.IMAGE_SERVER_URL = "http://localhost:3000";
 window.IMAGE_SERVEL_URL2 = "https://d16mf2kdusm8xr.cloudfront.net/";
 
