@@ -29,24 +29,6 @@ document.getElementById('postForm').addEventListener('submit', async (e) => {
     let uploadUrl;
 
     if (postImage){
-        // try{
-        //     const formData = new FormData();
-        //     formData.append("file", postImage);
-        //
-        //     const response = await fetch(`${IMAGE_SERVER_URL}/upload`, {
-        //         method: "POST",
-        //         body: formData,
-        //     });
-        //     if(!response.ok){
-        //         alert(MESSAGES.ERROR.IMAGE_UPLOAD_FAIL);
-        //         return
-        //     }
-        //     const res = await response.json();
-        //     imageUrls = [res.path];
-        //
-        // }catch (error){
-        //     alert(MESSAGES.ERROR.IMAGE_UPLOAD_FAIL);
-        // }
         const res = await fetch("https://16jdujbqqc.execute-api.ap-northeast-2.amazonaws.com/upload/presigned", {
             method: "POST",
             headers: {"Content-Type": "application/json"},

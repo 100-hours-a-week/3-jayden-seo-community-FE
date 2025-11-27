@@ -64,25 +64,6 @@ document.getElementById("confirmButton").addEventListener("click", async event =
     const nickname = document.getElementById("nickname").value;
     const profileFile = document.getElementById("profileInput").files[0];
     let profileImageUrl = null;
-    // if(isNewImage){
-    //     const formData = new FormData();
-    //     formData.append("file", profileFile);
-    //     try{
-    //         const result = await fetch(`${IMAGE_SERVER_URL}/upload`, {
-    //             method: "POST",
-    //             body: formData,
-    //         });
-    //         if(!result.ok){
-    //             alert(MESSAGES.ERROR.IMAGE_UPLOAD_FAIL);
-    //             return
-    //         }
-    //         const data = await result.json();
-    //         profileImageUrl = data.path;
-    //     }catch (error) {
-    //         alert(MESSAGES.ERROR.IMAGE_UPLOAD_FAIL);
-    //         console.log(error);
-    //     }
-    // }
     if(isNewImage){
         try{
             const res = await fetch("https://16jdujbqqc.execute-api.ap-northeast-2.amazonaws.com/upload/presigned", {
@@ -103,6 +84,8 @@ document.getElementById("confirmButton").addEventListener("click", async event =
                 headers: {"Content-Type": profileFile.type},
                 body: profileFile
             });
+            sessionStorage.setItem("profileImageUrl", IMAGE_SERVEL_URL2 + data.profileImageUrl);
+
         }catch(e){
             alert(MESSAGES.ERROR.IMAGE_UPLOAD_FAIL);
         }
