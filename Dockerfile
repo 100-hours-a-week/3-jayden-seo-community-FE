@@ -9,7 +9,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # 4. 의존성 설치
-RUN npm install
+RUN npm ci --only=production
 
 # 5. 앱 코드 복사
 COPY . .
