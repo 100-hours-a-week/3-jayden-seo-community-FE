@@ -82,7 +82,7 @@ function appendComment(comment) {
     item.innerHTML = `
     <div class="comment-header">
       <div class="comment-info">
-        <img src="${IMAGE_SERVEL_URL2} + ${comment.authorProfileImage || "/images/default-profile.png"}"
+        <img src="${comment.authorProfileImage ? IMAGE_SERVEL_URL2 + comment.authorProfileImage : '/images/default-profile.png'}"
              class="profile-icon"
              alt="user">
         <span class="comment-writer">${comment.authorNickname}</span>
