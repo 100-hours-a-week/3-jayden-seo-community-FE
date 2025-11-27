@@ -100,11 +100,10 @@ document.getElementById("confirmButton").addEventListener("click", async event =
         const data = await apiRequest(`${SERVER_URL}/member`, "PUT", requestBody);
         alert(MESSAGES.MEMBER.UPDATE_PROFILE_SUCCESS);
         window.location.reload();
-
+        if(isNewImage){
+            sessionStorage.setItem("profileImageUrl", IMAGE_SERVEL_URL2 + profileImageUrl);
+        }
         isNewImage = false;
-        console.log(profileImageUrl);
-        sessionStorage.setItem("profileImageUrl", IMAGE_SERVEL_URL2 + profileImageUrl);
-
     }catch (error) {
         alert(error.message);
     }
