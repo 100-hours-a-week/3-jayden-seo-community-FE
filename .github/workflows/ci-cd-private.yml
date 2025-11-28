@@ -78,7 +78,7 @@ jobs:
             --output text \
             --query "Command.CommandId")
           
-          aws ssm wait command-excuted \
+          aws ssm wait command-executed \
             --command-id "$COMMAND_ID" \
             --instance-id "${{ secrets.EC2_INSTANCE_ID }}"
           
