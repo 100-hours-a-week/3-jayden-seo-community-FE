@@ -70,12 +70,12 @@ jobs:
           aws ssm send-command \
             --document-name "AWS-RunShellScript" \
             --instance-ids "${{ secrets.EC2_INSTANCE_ID }}" \
-            --parameters commands="[
-              \"echo '${{ env.ECR_PASSWORD }}' | sudo docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-2.amazonaws.com\",
-              \"cd /home/ubuntu/fe\",
-              \"docker compose pull\",
-              \"docker compose up -d\"
-            ]" \
+            --parameters commands="sudo bash -c '
+              echo \"${{ env.ECR_PASSWORD }}\" | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-2.amazonaws.com &&
+              cd /home/ubuntu/fe &&
+              docker compose pull &&
+              docker compose up -d
+            '" \
             --comment "Deploy from Github Actions" \
             --output text
           
