@@ -65,20 +65,25 @@ jobs:
         run: |
           echo "ECR_PASSWORD=$(aws ecr get-login-password --region ap-northeast-2)" >> $GITHUB_ENV
 
+      - name: Prepare SSM Command
+        run: |
+          cat << 'EOF' > ssm-command.json
+          {
+            "commands": [
+              "echo '${{ env.ECR_PASSWORD }}' | sudo docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-2.amazonaws.com",
+              "cd /home/ubuntu/fe",
+              "sudo docker compose pull",
+              "sudo docker compose up -d"
+            ]
+          }
+          EOF
+
       - name: Deploy to EC2 via SSM
         run: |
           aws ssm send-command \
             --document-name "AWS-RunShellScript" \
             --instance-ids "${{ secrets.EC2_INSTANCE_ID }}" \
-            --parameters commands="sudo bash -c '
-              echo \"${{ env.ECR_PASSWORD }}\" | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-2.amazonaws.com &&
-              cd /home/ubuntu/fe &&
-              docker compose pull &&
-              docker compose up -d
-            '" \
+            --parameters file://ssm-command.json \
             --comment "Deploy from Github Actions" \
             --output text
           
-     
-
-
