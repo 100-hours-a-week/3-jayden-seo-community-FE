@@ -66,13 +66,13 @@ jobs:
           aws ssm send-command \
             --document-name "AWS-RunShellScript" \
             --instance-ids "${{ secrets.EC2_INSTANCE_ID }}" \
-            --parameters 'commands=[
-              "cd /home/ssm-user/fe",
-              "docker compose pull",
-              "docker compose up -d"
-            ]' \
-            --commnet "Deploy from Github Actions" \
-            -- output text
+            --parameters commands="[
+              \"cd /home/ssm-user/fe\",
+              \"docker compose pull\",
+              \"docker compose up -d\"
+            ]" \
+            --comment "Deploy from Github Actions" \
+            --output text
           
      
 
