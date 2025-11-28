@@ -48,24 +48,32 @@ jobs:
           docker build -t $IMAGE .
           docker push $IMAGE
 
-#  express-cd:
-#    needs: express-ci
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - name: Prepare SSH key
-#        run: |
-#          mkdir -p ~/.ssh
-#          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-#          chmod 600 ~/.ssh/id_rsa
-#          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
-#
-#      - name: Deploy to EC2 via Docker Compose
-#        run: |
-#          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER}}@${{ secrets.SERVER_HOST }} << 'EOF'
-#              cd /home/${{ secrets.SERVER_USER }}//fe
-#              docker compose pull
-#              docker compose up -d
-#          EOF
+  express-cd:
+    needs: express-ci
+    runs-on: ubuntu-latest
+
+    steps:
+      # AWS 인증
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: Deploy to EC2 via SSM
+        run: |
+          aws ssm send-command \
+            --document-name "AWS-RunShellScript" \
+            --instance-ids "${{ secrets.EC2_INSTANCE_ID }}" \
+            --parameters 'commands=[
+              "cd /home/ssm-user/fe",
+              "docker compose pull",
+              "docker compose up -d"
+            ]' \
+            --commnet "Deploy from Github Actions" \
+            -- output text
+          
+     
 
 
