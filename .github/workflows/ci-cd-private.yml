@@ -77,7 +77,9 @@ jobs:
             --comment "Deploy from Github Actions" \
             --output text \
             --query "Command.CommandId")
-          
+            
+          echo "Command ID: $COMMAND_ID"
+
           aws ssm wait command-executed \
             --command-id "$COMMAND_ID" \
             --instance-id "${{ secrets.EC2_INSTANCE_ID }}"
