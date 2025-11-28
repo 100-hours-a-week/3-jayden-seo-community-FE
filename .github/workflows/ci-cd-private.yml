@@ -61,29 +61,60 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-2
 
-      - name: Get ECR Login Password
-        run: |
-          echo "ECR_PASSWORD=$(aws ecr get-login-password --region ap-northeast-2)" >> $GITHUB_ENV
-
-      - name: Prepare SSM Command
-        run: |
-          cat << 'EOF' > ssm-command.json
-          {
-            "commands": [
-              "echo '${{ env.ECR_PASSWORD }}' | sudo docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-2.amazonaws.com",
-              "cd /home/ubuntu/fe",
-              "sudo docker compose pull",
-              "sudo docker compose up -d"
-            ]
-          }
-          EOF
-
       - name: Deploy to EC2 via SSM
         run: |
-          aws ssm send-command \
+          ECR_PASSWORD=$(aws ecr get-login-password --region ap-northeast-2)
+          
+          COMMAND_ID = $(aws ssm send-command \
             --document-name "AWS-RunShellScript" \
             --instance-ids "${{ secrets.EC2_INSTANCE_ID }}" \
-            --parameters file://ssm-command.json \
+            --parameters commands="[
+              \"echo '$ECR_PASSWORD' | sudo docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-2.amazonaws.com\",
+              \"cd /home/ubuntu/fe\",
+              \"sudo docker compose pull\",
+              \"sudo docker compose up -d\"
+            ]" \
             --comment "Deploy from Github Actions" \
-            --output text
+            --output text \
+            --query "Command.CommandId")
+          
+          aws ssm wain command-excuted \
+            --command-id "$COMMAND_ID" \
+            --instance-id "${{ secrets.EC2_INSTANCE_ID }}"
+          
+          STATUS=$(aws ssm get-command-invocation \
+          --command-id "$COMMAND_ID" \
+          --instance-id "${{ secrets.EC2_INSTANCE_ID }}" \
+          --query "Status" \
+          --output text)
+        
+          if [ "$STATUS" != "Success" ]; then
+            exit 1
+          fi
+
+#      - name: Get ECR Login Password
+#        run: |
+#          echo "ECR_PASSWORD=$(aws ecr get-login-password --region ap-northeast-2)" >> $GITHUB_ENV
+#
+#      - name: Prepare SSM Command
+#        run: |
+#          cat << 'EOF' > ssm-command.json
+#          {
+#            "commands": [
+#              "echo '${{ env.ECR_PASSWORD }}' | sudo docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-2.amazonaws.com",
+#              "cd /home/ubuntu/fe",
+#              "sudo docker compose pull",
+#              "sudo docker compose up -d"
+#            ]
+#          }
+#          EOF
+#
+#      - name: Deploy to EC2 via SSM
+#        run: |
+#          aws ssm send-command \
+#            --document-name "AWS-RunShellScript" \
+#            --instance-ids "${{ secrets.EC2_INSTANCE_ID }}" \
+#            --parameters file://ssm-command.json \
+#            --comment "Deploy from Github Actions" \
+#            --output text
           
