@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  express-ci:
+  express-private-ci:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,7 +27,6 @@ jobs:
 
       - name: Run Tests
         run: npm test
-      # 여기까지는 당연히 동일하다.
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v3
@@ -48,8 +47,8 @@ jobs:
           docker build -t $IMAGE .
           docker push $IMAGE
 
-  express-cd:
-    needs: express-ci
+  express-private-cd:
+    needs: express-private-ci
     runs-on: ubuntu-latest
 
     steps:
@@ -93,30 +92,3 @@ jobs:
           if [ "$STATUS" != "Success" ]; then
             exit 1
           fi
-
-#      - name: Get ECR Login Password
-#        run: |
-#          echo "ECR_PASSWORD=$(aws ecr get-login-password --region ap-northeast-2)" >> $GITHUB_ENV
-#
-#      - name: Prepare SSM Command
-#        run: |
-#          cat << 'EOF' > ssm-command.json
-#          {
-#            "commands": [
-#              "echo '${{ env.ECR_PASSWORD }}' | sudo docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-2.amazonaws.com",
-#              "cd /home/ubuntu/fe",
-#              "sudo docker compose pull",
-#              "sudo docker compose up -d"
-#            ]
-#          }
-#          EOF
-#
-#      - name: Deploy to EC2 via SSM
-#        run: |
-#          aws ssm send-command \
-#            --document-name "AWS-RunShellScript" \
-#            --instance-ids "${{ secrets.EC2_INSTANCE_ID }}" \
-#            --parameters file://ssm-command.json \
-#            --comment "Deploy from Github Actions" \
-#            --output text
-          
