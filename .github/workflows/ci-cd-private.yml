@@ -72,7 +72,7 @@ jobs:
             --instance-ids "${{ secrets.EC2_INSTANCE_ID }}" \
             --parameters commands="[
               \"echo '${{ env.ECR_PASSWORD }}' | sudo docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-2.amazonaws.com\",
-              \"cd /home/ssm-user/fe\",
+              \"cd /home/ubuntu/fe\",
               \"docker compose pull\",
               \"docker compose up -d\"
             ]" \
