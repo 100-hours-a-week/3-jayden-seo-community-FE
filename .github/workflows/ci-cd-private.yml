@@ -1,4 +1,4 @@
-name: Express Docker CI-CD
+name: Express Docker CI-CD Private
 
 on:
   push:
@@ -38,9 +38,9 @@ jobs:
 
       - name: Login to ECR
         run: |
-          aws ecr get-login-password --region ap-northeast-2 \
+          aws ecr get-login-password --region ap-northeast-2 | \
           | docker login \
-            --username AWS
+            --username AWS \
             --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-2.amazonaws.com
 
       - name: Build & Push Express Image
