@@ -42,6 +42,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                 const data = await apiRequest(`${SERVER_URL}/posts/${postId}/comments`,
                     "POST", {content});
 
+                const list = document.querySelector(".comment-list");
+                if (list.querySelector(".empty-comments") !== null) list.innerHTML = '';
                 appendComment(data);
                 textarea.value = ""; // 댓글 입력창 초기화
             } catch (err) {
@@ -67,7 +69,7 @@ function renderComments(comments) {
     list.innerHTML = "";
 
     if (comments.length === 0) {
-        list.innerHTML = `<p style="color:#777;">댓글이 없습니다.</p>`;
+        list.innerHTML = `<p class="empty-comments" style="color:#777;">댓글이 없습니다.</p>`;
         return;
     }
     comments.forEach((c) => appendComment(c));

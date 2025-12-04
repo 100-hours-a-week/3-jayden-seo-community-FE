@@ -44,7 +44,6 @@ async function confirmDelete() {
     } else if (deleteTarget === "comment") {
         try {
             const data = await apiRequest(`${SERVER_URL}/comments/${deleteId}`, "DELETE");
-            alert(MESSAGES.COMMENT.DELETE_SUCCESS);
             window.location.reload();
             return;
         }catch (error){
