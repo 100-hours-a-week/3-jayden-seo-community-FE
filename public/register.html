@@ -59,11 +59,12 @@
 
     <footer class="policy-footer">
         <div class="policy-links">
-            <a href="http://localhost:8080/terms" target="_blank" rel="noopener">이용약관</a>
+            <a id = "terms-link" target="_blank" rel="noopener">이용약관</a>
             <span class="separator">|</span>
-            <a href="http://localhost:8080/privacy" target="_blank" rel="noopener">개인정보처리방침</a>
+            <a id="privacy-link" target="_blank" rel="noopener">개인정보처리방침</a>
         </div>
     </footer>
+
 
     <script src="config/constant.js"></script>
     <script type="module" src="js/api/member/registerRequest.js"></script>
@@ -71,6 +72,10 @@
         document.getElementById("homeTitle").addEventListener("click", () => {
             window.location.href = "/posts.html";
         })
+    </script>
+    <script>
+        document.getElementById("terms-link").href = `${window.SERVER_URL}/terms`;
+        document.getElementById("privacy-link").href = `${window.SERVER_URL}/privacy`;
     </script>
 </body>
 </html>
