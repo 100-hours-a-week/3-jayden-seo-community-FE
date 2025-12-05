@@ -53,7 +53,7 @@ jobs:
       - name: Deploy to EC2 via Docker Compose
         run: |
           ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER}}@${{ secrets.SERVER_HOST }} << 'EOF'
-              cd /home/${{ secrets.SERVER_USER }}//fe
+              cd /home/${{ secrets.SERVER_USER }}/fe
               docker compose pull
               docker compose up -d
           EOF
