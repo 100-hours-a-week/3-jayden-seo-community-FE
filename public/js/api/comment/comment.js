@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             try {
                 const data = await apiRequest(`${SERVER_URL}/comments/${editingCommentId}`,
                     "PATCH", {content});
-                alert(MESSAGES.COMMENT.SUCCESS);
+                alert(MESSAGES.COMMENT.UPDATE_SUCCESS);
                 editingCommentId = null;
                 window.location.reload();
 

@@ -35,7 +35,7 @@ async function confirmDelete() {
     if (deleteTarget === "post") {
         try{
             const data = await apiRequest(`${SERVER_URL}/posts/${postId}`, "DELETE");
-            alert(MESSAGES.POST.DELETE_SUCCESS);
+            // alert(MESSAGES.POST.DELETE_SUCCESS);
             window.location.href = '../../../posts.html';
         }catch (error){
             alert(error.message);
