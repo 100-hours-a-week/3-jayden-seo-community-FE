@@ -23,7 +23,7 @@ logout.addEventListener("click", async (e) => {
     try{
         const data = await apiRequest(`${SERVER_URL}/auth/logout`, "DELETE");
         sessionStorage.removeItem("accessToken");
-        alert(MESSAGES.LOGOUT.SUCCESS);
+        // alert(MESSAGES.LOGOUT.SUCCESS);
         window.location.href="/login.html";
     }catch(e){
         console.log(e);
