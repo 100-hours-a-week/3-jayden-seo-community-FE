@@ -18,45 +18,47 @@
     <link rel="stylesheet" href="css/footer.css">
 </head>
 <body>
-    <div class = "box">
-        <span id="homeTitle">아무 말 대잔치</span>
+<div class = "box">
+    <span id="homeTitle">Daily Share</span>
+</div>
+<hr>
+<div style="text-align: center; font-size: 32px; margin-top: 220px; margin-bottom: 30px;">
+    <b>로그인</b>
+</div>
+<form id="loginForm">
+    <div>
+        <label for="email"><b>이메일</b></label>
+        <input type="email" id="email" placeholder="이메일을 입력하세요" required>
+        <p id="emailError" class="error-message"></p>
     </div>
-    <hr>
-    <div style="text-align: center; font-size: 32px; margin-top: 220px; margin-bottom: 30px;">
-        <b>로그인</b>
+    <div>
+        <label for="password"><b>비밀번호</b> </label>
+        <input type="password" id="password" placeholder="비밀번호를 입력하세요" required>
+        <p id="passwordError" class="error-message"></p>
     </div>
-    <form id="loginForm">
-        <div>
-            <label for="email"><b>이메일</b></label>
-            <input type="email" id="email" placeholder="이메일을 입력하세요" required>
-        </div>
-        <div>
-            <label for="password"><b>비밀번호</b> </label>
-            <input type="password" id="password" placeholder="비밀번호를 입력하세요" required>
-        </div>
-        <button id="loginButton" class="login_button" type="button">로그인</button>
-    </form>
-    <button class="redirect-button" onclick="location.href='/register.html'">회원가입</button>
+    <button id="loginButton" class="login_button" type="button">로그인</button>
+</form>
+<button class="redirect-button" onclick="location.href='/register.html'">회원가입</button>
 
-    <footer class="policy-footer">
-        <div class="policy-links">
-            <a id = "terms-link" target="_blank" rel="noopener">이용약관</a>
-            <span class="separator">|</span>
-            <a id="privacy-link" target="_blank" rel="noopener">개인정보처리방침</a>
-        </div>
-    </footer>
+<footer class="policy-footer">
+    <div class="policy-links">
+        <a id = "terms-link" target="_blank" rel="noopener">이용약관</a>
+        <span class="separator">|</span>
+        <a id="privacy-link" target="_blank" rel="noopener">개인정보처리방침</a>
+    </div>
+</footer>
 
-    <script src="config/constant.js"></script>
-    <script type="module" src="js/api/auth/loginRequest.js"></script>
-    <script>
-        document.getElementById("homeTitle").addEventListener("click", () => {
-            window.location.href = "/posts.html";
-        })
-    </script>
-    <script>
-        document.getElementById("terms-link").href = `${window.SERVER_URL}/terms`;
-        document.getElementById("privacy-link").href = `${window.SERVER_URL}/privacy`;
-    </script>
+<script src="config/constant.js"></script>
+<script type="module" src="js/api/auth/loginRequest.js"></script>
+<script>
+    document.getElementById("homeTitle").addEventListener("click", () => {
+        window.location.href = "/posts.html";
+    })
+</script>
+<script>
+    document.getElementById("terms-link").href = `${window.SERVER_URL}/terms`;
+    document.getElementById("privacy-link").href = `${window.SERVER_URL}/privacy`;
+</script>
 
 </body>
 </html>
