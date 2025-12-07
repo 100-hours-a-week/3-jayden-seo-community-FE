@@ -22,6 +22,7 @@ document.getElementById("loginForm").addEventListener("submit", async event => {
     try {
         const data = await apiRequest(`${SERVER_URL}/member/password`, "PUT", requestBody);
         alert(MESSAGES.MEMBER.UPDATE_PASSWORD_SUCCESS);
+        window.location.reload();
     }catch (error) {
         passwordError.textContent = "";
         passwordConfirmError.textContent = "";
