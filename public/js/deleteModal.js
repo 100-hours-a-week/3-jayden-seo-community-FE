@@ -16,9 +16,12 @@ cancelBtn.addEventListener('click', () => {
 
 confirmDeleteBtn.addEventListener('click', async () => {
     try{
-        const data = await apiRequest(`${SERVER_URL}/member`, "DELETE");
-        alert(MESSAGES.MEMBER.DELETE_ACCOUNT_SUCCESS);
+        const data1 = await apiRequest(`${SERVER_URL}/auth/logout`, "DELETE");
+        const data2 = await apiRequest(`${SERVER_URL}/member`, "DELETE");
+        sessionStorage.removeItem("accessToken");
         modal.style.display = 'none';
+        window.location.href = "/";
+        alert(MESSAGES.MEMBER.DELETE_ACCOUNT_SUCCESS);
     }catch (error){
         alert(MESSAGES.MEMBER.DELETE_ACCOUNT_FAIL);
     }
