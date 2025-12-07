@@ -58,11 +58,11 @@ export async function apiRequest(url, method = "GET", body = null){
     }
 
     if(response.status === 204 || response.status === 201) {
-        return null
+        return null;
     }
     const data = await response.json();
     if(!response.ok){
-        throw new Error(data?.message || "요청 실패")
+        throw data;
     }
     return data;
 }
