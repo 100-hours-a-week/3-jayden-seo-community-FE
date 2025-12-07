@@ -25,17 +25,19 @@ document.getElementById("registerForm").addEventListener('submit', async (e) => 
     const password = document.getElementById("password").value;
     const passwordConfirm = document.getElementById("passwordConfirm").value;
     const passwordConfirmError = document.getElementById("passwordConfirmError");
+    const passwordError = document.getElementById("passwordError");
+    const nicknameError = document.getElementById("nicknameError");
+    const emailError = document.getElementById("emailError");
 
     const email = document.getElementById("email").value;
     const nickname = document.getElementById("nickname").value;
     const profileFile = profileInput.files[0];
+    initError(passwordError, passwordConfirmError, nicknameError, emailError);
 
     if (password !== passwordConfirm) {
         // alert(MESSAGES.MEMBER.PASSWORD_MISMATCH);
         passwordConfirmError.textContent = "비밀번호가 일치하지 않습니다.";
         return;
-    }else{
-        passwordConfirmError.textContent = "";
     }
 
     // 임시 프로필 사진 이미지 url
@@ -80,10 +82,6 @@ document.getElementById("registerForm").addEventListener('submit', async (e) => 
         const data = await apiRequest(`${SERVER_URL}/member/register`, "POST", requestBody);
         window.location.href = "/login.html";
     }catch(err){
-        const passwordConfirmError = document.getElementById("passwordConfirmError");
-        const passwordError = document.getElementById("passwordError");
-        const nicknameError = document.getElementById("nicknameError");
-        const emailError = document.getElementById("emailError");
 
         initError(passwordError, passwordConfirmError, nicknameError, emailError);
         const errorMessage = err.message;
