@@ -45,11 +45,15 @@ document.getElementById('checkButton').addEventListener('click', async () => {
             `${SERVER_URL}/member/nickname/duplicate?nickname=${encodeURIComponent(nickname)}`,
             "GET"
         )
+        const errorMessage = document.getElementById('nicknameConfirmError');
+
         if (!data.isValidate){
-            alert(MESSAGES.MEMBER.NICKNAME_AVAILABLE);
+            errorMessage.style.color = "green";
+            errorMessage.textContent = "사용 가능한 닉네임입니다.";
             confirmBtn.style.display = 'block'; // ✅ 수정완료 버튼 표시
         }else{
-            alert(MESSAGES.MEMBER.NICKNAME_UNAVAILABLE);
+            errorMessage.style.color = "red";
+            errorMessage.textContent = "이미 사용중인 닉네임입니다.";
             confirmBtn.style.display = 'none'; // ✅ 다시 숨김
         }
     } catch (error) {
