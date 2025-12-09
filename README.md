@@ -24,16 +24,14 @@
 - **Frontend**: HTML, CSS, Vanilla JS
 - **Runtime / Dev Server**: Node.js, Express.js
 - **Infra / DevOps**
-    - AWS EC2, S3, Lambda, API Gateway
-    - Docker, GitHub Actions
-    - Nginx (배포 환경)
-- **Etc**
-    - Fetch API 기반 API 호출 모듈화
-    - JWT 기반 인증 관리
+    - Nginx, Docker, Docker Compose
+    - AWS EC2, VPC, S3, CloudFront
+    - Lambda, API Gateway
+    - RDS, ECR
+    - GitHub Actions
 
 ## 🧱 서버 아키텍쳐
-
-
+<img width="600" height="650" alt="캡처" src="https://github.com/user-attachments/assets/282de188-057c-4974-8246-5e80e22ce9f0" />
 
 
 ## 🗂️ 패키지 구조
